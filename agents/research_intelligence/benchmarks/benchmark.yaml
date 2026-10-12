@@ -1,0 +1,9 @@
+agent:
+  id: research_intelligence
+  version: 1.0.0
+benchmark_version: "1.0"
+suites:
+  - RI-PLANNING
+  - RI-EVIDENCE
+  - RI-VERIFICATION
+  - RI-END-TO-END

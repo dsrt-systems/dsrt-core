@@ -1,0 +1,16 @@
+id: standard_research
+version: "1.0"
+
+phases:
+  - id: understand
+    action: understand_objective
+  - id: plan
+    action: create_research_plan
+  - id: analyze
+    action: analyze_input_evidence
+  - id: synthesize
+    action: synthesize_findings
+  - id: verify
+    action: verify_output
+  - id: finalize
+    action: create_artifact

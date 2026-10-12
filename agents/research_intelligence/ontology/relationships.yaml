@@ -1,0 +1,20 @@
+relationships:
+  objective_contains_question:
+    from: ResearchObjective
+    to: ResearchQuestion
+
+  question_produces_claim:
+    from: ResearchQuestion
+    to: Claim
+
+  claim_supported_by:
+    from: Claim
+    to: Evidence
+
+  claim_contradicts_claim:
+    from: Claim
+    to: Claim
+
+  finding_derived_from_claim:
+    from: Finding
+    to: Claim

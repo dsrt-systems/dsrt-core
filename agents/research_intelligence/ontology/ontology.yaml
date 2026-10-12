@@ -1,0 +1,22 @@
+version: "1.0"
+root_entity: ResearchObjective
+
+core_entities:
+  - ResearchObjective
+  - ResearchQuestion
+  - Source
+  - Document
+  - Evidence
+  - Claim
+  - Finding
+  - Contradiction
+  - Assumption
+  - Uncertainty
+  - Citation
+  - Conclusion
+
+principles:
+  claim_is_not_evidence: true
+  source_is_not_claim: true
+  citation_requires_evidence: true
+  material_claims_require_support: true

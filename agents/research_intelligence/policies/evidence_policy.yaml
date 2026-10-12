@@ -1,0 +1,8 @@
+version: "1.0"
+rules:
+  material_claims:
+    evidence_required: true
+  evidence:
+    provenance_required: true
+  unsupported_claims:
+    final_output: prohibited

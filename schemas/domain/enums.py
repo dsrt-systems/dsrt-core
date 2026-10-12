@@ -1,0 +1,603 @@
+"""
+DSRT Core Domain Enums.
+"""
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class OrganizationStatus(str, Enum):
+    ACTIVE = "active"
+    SUSPENDED = "suspended"
+    ARCHIVED = "archived"
+
+
+class UserStatus(str, Enum):
+    ACTIVE = "active"
+    SUSPENDED = "suspended"
+    ARCHIVED = "archived"
+
+
+class OrganizationRole(str, Enum):
+    OWNER = "owner"
+    ADMIN = "admin"
+    MEMBER = "member"
+    VIEWER = "viewer"
+
+
+class AgentStatus(str, Enum):
+    DISCOVERED = "DISCOVERED"
+    VALIDATING = "VALIDATING"
+    VALID = "VALID"
+    REGISTERED = "REGISTERED"
+    READY = "READY"
+    ACTIVE = "ACTIVE"
+    DEPRECATED = "DEPRECATED"
+    ARCHIVED = "ARCHIVED"
+
+
+class AgentVersionStatus(str, Enum):
+    REGISTERED = "REGISTERED"
+    ACTIVE = "ACTIVE"
+    DEPRECATED = "DEPRECATED"
+    ARCHIVED = "ARCHIVED"
+
+
+class RiskLevel(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+class TaskStatus(str, Enum):
+    CREATED = "CREATED"
+    QUEUED = "QUEUED"
+    EXECUTING = "EXECUTING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+
+
+class ExecutionStatus(str, Enum):
+    QUEUED = "QUEUED"
+    INITIALIZING = "INITIALIZING"
+    RUNNING = "RUNNING"
+    VERIFYING = "VERIFYING"
+    FINALIZING = "FINALIZING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLING = "CANCELLING"
+    CANCELLED = "CANCELLED"
+
+
+class ProviderStatus(str, Enum):
+    ACTIVE = "active"
+    DEGRADED = "degraded"
+    DEPRECATED = "deprecated"
+    ARCHIVED = "archived"
+
+
+class ProviderType(str, Enum):
+    CLOUD = "cloud"
+    SELF_HOSTED = "self_hosted"
+    LOCAL = "local"
+    ENTERPRISE = "enterprise"
+    DSRT = "dsrt"
+
+
+class ArtifactType(str, Enum):
+    DOCUMENT = "DOCUMENT"
+    REPORT = "REPORT"
+    CODE = "CODE"
+    DATASET = "DATASET"
+    IMAGE = "IMAGE"
+    TABLE = "TABLE"
+    JSON = "JSON"
+    TEXT = "TEXT"
+    EVIDENCE_BUNDLE = "EVIDENCE_BUNDLE"
+    LOG = "LOG"
+
+
+class VerificationStatus(str, Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    PASSED = "PASSED"
+    PASSED_WITH_WARNINGS = "PASSED_WITH_WARNINGS"
+    FAILED = "FAILED"
+    INCONCLUSIVE = "INCONCLUSIVE"
+    REVIEW_REQUIRED = "REVIEW_REQUIRED"
+
+
+class EventType(str, Enum):
+    """Canonical event types — C1 & C2 §49."""
+    EXECUTION_CREATED = "EXECUTION_CREATED"
+    EXECUTION_STARTED = "EXECUTION_STARTED"
+    EXECUTION_COMPLETED = "EXECUTION_COMPLETED"
+    EXECUTION_FAILED = "EXECUTION_FAILED"
+    EXECUTION_CANCELLING = "EXECUTION_CANCELLING"
+    EXECUTION_CANCELLED = "EXECUTION_CANCELLED"
+
+    AGENT_INITIALIZATION_STARTED = "AGENT_INITIALIZATION_STARTED"
+    AGENT_INITIALIZED = "AGENT_INITIALIZED"
+    AGENT_EXECUTION_STARTED = "AGENT_EXECUTION_STARTED"
+    AGENT_EXECUTION_COMPLETED = "AGENT_EXECUTION_COMPLETED"
+    AGENT_EXECUTION_FAILED = "AGENT_EXECUTION_FAILED"
+
+    CONTEXT_BUILD_STARTED = "CONTEXT_BUILD_STARTED"
+    CONTEXT_BUILD_COMPLETED = "CONTEXT_BUILD_COMPLETED"
+
+    MODEL_REQUEST_STARTED = "MODEL_REQUEST_STARTED"
+    MODEL_REQUEST_COMPLETED = "MODEL_REQUEST_COMPLETED"
+    MODEL_REQUEST_FAILED = "MODEL_REQUEST_FAILED"
+
+    TOOL_CALL_STARTED = "TOOL_CALL_STARTED"
+    TOOL_CALL_COMPLETED = "TOOL_CALL_COMPLETED"
+    TOOL_CALL_FAILED = "TOOL_CALL_FAILED"
+
+    VERIFICATION_STARTED = "VERIFICATION_STARTED"
+    VERIFICATION_COMPLETED = "VERIFICATION_COMPLETED"
+
+    ARTIFACT_CREATED = "ARTIFACT_CREATED"
+    RESOURCE_LIMIT_REACHED = "RESOURCE_LIMIT_REACHED"
+    AGENT_EVENT = "AGENT_EVENT"
+    BENCHMARK_RECORD = "BENCHMARK_RECORD"
+
+    # --- C2 Model Fabric Event Types (C2 §49) ---
+    MODEL_REQUEST_CREATED = "MODEL_REQUEST_CREATED"
+    MODEL_ROUTING_STARTED = "MODEL_ROUTING_STARTED"
+    MODEL_ROUTING_COMPLETED = "MODEL_ROUTING_COMPLETED"
+    MODEL_REQUEST_RETRY = "MODEL_REQUEST_RETRY"
+    MODEL_FALLBACK_STARTED = "MODEL_FALLBACK_STARTED"
+    MODEL_FALLBACK_COMPLETED = "MODEL_FALLBACK_COMPLETED"
+    MODEL_CHECKPOINT_CREATED = "MODEL_CHECKPOINT_CREATED"
+    MODEL_SESSION_SWITCHED = "MODEL_SESSION_SWITCHED"
+
+
+    # --- C3 Tool & Environment Fabric Event Types (C3 §45) ---
+    TOOL_REQUESTED = "TOOL_REQUESTED"
+    TOOL_AUTHORIZATION_STARTED = "TOOL_AUTHORIZATION_STARTED"
+    TOOL_AUTHORIZATION_COMPLETED = "TOOL_AUTHORIZATION_COMPLETED"
+    TOOL_AUTHORIZATION_DENIED = "TOOL_AUTHORIZATION_DENIED"
+    TOOL_QUEUED = "TOOL_QUEUED"
+    TOOL_STARTED = "TOOL_STARTED"
+    TOOL_OBSERVATION_CREATED = "TOOL_OBSERVATION_CREATED"
+    TOOL_ARTIFACT_CREATED = "TOOL_ARTIFACT_CREATED"
+    TOOL_RETRY = "TOOL_RETRY"
+    TOOL_COMPLETED = "TOOL_COMPLETED"
+    TOOL_FAILED = "TOOL_FAILED"
+    TOOL_CANCELLED = "TOOL_CANCELLED"
+
+    APPROVAL_REQUESTED = "APPROVAL_REQUESTED"
+    APPROVAL_GRANTED = "APPROVAL_GRANTED"
+    APPROVAL_REJECTED = "APPROVAL_REJECTED"
+    APPROVAL_EXPIRED = "APPROVAL_EXPIRED"
+
+    ENVIRONMENT_PROVISION_STARTED = "ENVIRONMENT_PROVISION_STARTED"
+    ENVIRONMENT_PROVISION_COMPLETED = "ENVIRONMENT_PROVISION_COMPLETED"
+    ENVIRONMENT_PROVISION_FAILED = "ENVIRONMENT_PROVISION_FAILED"
+    ENVIRONMENT_STARTED = "ENVIRONMENT_STARTED"
+    ENVIRONMENT_RESET = "ENVIRONMENT_RESET"
+    ENVIRONMENT_SNAPSHOT_CREATED = "ENVIRONMENT_SNAPSHOT_CREATED"
+    ENVIRONMENT_HEALTH_DEGRADED = "ENVIRONMENT_HEALTH_DEGRADED"
+    ENVIRONMENT_DESTROYED = "ENVIRONMENT_DESTROYED"
+
+    WORLD_PROVISIONED = "WORLD_PROVISIONED"
+    WORLD_RESET = "WORLD_RESET"
+    WORLD_DESTROYED = "WORLD_DESTROYED"
+
+
+class ErrorCode(str, Enum):
+    AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED"
+    AUTHORIZATION_DENIED = "AUTHORIZATION_DENIED"
+    VALIDATION_ERROR = "VALIDATION_ERROR"
+
+    AGENT_NOT_FOUND = "AGENT_NOT_FOUND"
+    AGENT_INVALID = "AGENT_INVALID"
+    AGENT_INITIALIZATION_FAILED = "AGENT_INITIALIZATION_FAILED"
+    AGENT_EXECUTION_FAILED = "AGENT_EXECUTION_FAILED"
+    AGENT_TIMEOUT = "AGENT_TIMEOUT"
+
+    MODEL_NOT_AVAILABLE = "MODEL_NOT_AVAILABLE"
+    PROVIDER_TIMEOUT = "PROVIDER_TIMEOUT"
+    PROVIDER_RATE_LIMITED = "PROVIDER_RATE_LIMITED"
+
+    TOOL_NOT_FOUND = "TOOL_NOT_FOUND"
+    TOOL_TIMEOUT = "TOOL_TIMEOUT"
+    TOOL_PERMISSION_DENIED = "TOOL_PERMISSION_DENIED"
+
+    CONTEXT_BUILD_FAILED = "CONTEXT_BUILD_FAILED"
+    VERIFICATION_FAILED = "VERIFICATION_FAILED"
+    ARTIFACT_CREATION_FAILED = "ARTIFACT_CREATION_FAILED"
+
+    RESOURCE_LIMIT_EXCEEDED = "RESOURCE_LIMIT_EXCEEDED"
+    EXECUTION_CANCELLED = "EXECUTION_CANCELLED"
+
+    INTERNAL_ERROR = "INTERNAL_ERROR"
+
+    # --- C3 Tool & Environment Fabric Error Codes (C3 §46) ---
+    TOOL_VERSION_UNAVAILABLE = "TOOL_VERSION_UNAVAILABLE"
+    TOOL_POLICY_DENIED = "TOOL_POLICY_DENIED"
+    TOOL_RATE_LIMITED = "TOOL_RATE_LIMITED"
+    TOOL_INVALID_ARGUMENT = "TOOL_INVALID_ARGUMENT"
+    TOOL_RUNTIME_FAILURE = "TOOL_RUNTIME_FAILURE"
+    TOOL_NETWORK_FAILURE = "TOOL_NETWORK_FAILURE"
+    TOOL_SANDBOX_FAILURE = "TOOL_SANDBOX_FAILURE"
+    TOOL_RESOURCE_LIMIT = "TOOL_RESOURCE_LIMIT"
+    TOOL_CREDENTIAL_FAILURE = "TOOL_CREDENTIAL_FAILURE"
+    TOOL_OUTPUT_TOO_LARGE = "TOOL_OUTPUT_TOO_LARGE"
+    TOOL_CANCELLED = "TOOL_CANCELLED"
+    TOOL_APPROVAL_REQUIRED = "TOOL_APPROVAL_REQUIRED"
+    TOOL_APPROVAL_REJECTED = "TOOL_APPROVAL_REJECTED"
+    TOOL_APPROVAL_EXPIRED = "TOOL_APPROVAL_EXPIRED"
+
+    ENVIRONMENT_NOT_FOUND = "ENVIRONMENT_NOT_FOUND"
+    ENVIRONMENT_PROVISION_FAILED = "ENVIRONMENT_PROVISION_FAILED"
+    ENVIRONMENT_UNAVAILABLE = "ENVIRONMENT_UNAVAILABLE"
+    ENVIRONMENT_RESOURCE_EXHAUSTED = "ENVIRONMENT_RESOURCE_EXHAUSTED"
+
+    WORLD_NOT_FOUND = "WORLD_NOT_FOUND"
+    WORLD_PROVISION_FAILED = "WORLD_PROVISION_FAILED"
+    WORLD_UNAVAILABLE = "WORLD_UNAVAILABLE"
+
+
+# =============================================================================
+# C2 — Model Fabric Enums
+# =============================================================================
+
+
+class ModelModality(str, Enum):
+    """Input/output modalities a model can handle (C2 §15)."""
+    TEXT = "text"
+    IMAGE = "image"
+    AUDIO = "audio"
+    VIDEO = "video"
+    DOCUMENT = "document"
+
+
+class MessageRole(str, Enum):
+    """Roles in a canonical message sequence."""
+    SYSTEM = "system"
+    USER = "user"
+    ASSISTANT = "assistant"
+    TOOL = "tool"
+
+
+class MessageContentType(str, Enum):
+    """Types of content parts inside a canonical message."""
+    TEXT = "text"
+    IMAGE_URL = "image_url"
+    IMAGE_BYTES = "image_bytes"
+    AUDIO = "audio"
+    TOOL_RESULT = "tool_result"
+
+
+class ToolCallMode(str, Enum):
+    """How a model may invoke tools."""
+    SEQUENTIAL = "sequential"
+    PARALLEL = "parallel"
+
+
+class ReasoningEffort(str, Enum):
+    """Normalized reasoning-effort hint for reasoning-capable models."""
+    MINIMAL = "minimal"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class FinishReason(str, Enum):
+    """Normalized reason the model stopped producing output (C2 §10)."""
+    COMPLETED = "completed"
+    MAX_TOKENS = "max_tokens"
+    STOP_SEQUENCE = "stop_sequence"
+    TOOL_CALLS = "tool_calls"
+    CONTENT_FILTER = "content_filter"
+    CANCELLED = "cancelled"
+    ERROR = "error"
+
+
+class StreamEventType(str, Enum):
+    """Normalized streaming event types (C2 §37)."""
+    STREAM_STARTED = "STREAM_STARTED"
+    TEXT_DELTA = "TEXT_DELTA"
+    REASONING_DELTA = "REASONING_DELTA"
+    TOOL_CALL_DELTA = "TOOL_CALL_DELTA"
+    STRUCTURED_OUTPUT_DELTA = "STRUCTURED_OUTPUT_DELTA"
+    USAGE_DELTA = "USAGE_DELTA"
+    STREAM_COMPLETED = "STREAM_COMPLETED"
+    STREAM_FAILED = "STREAM_FAILED"
+
+
+class ProviderHealthStatus(str, Enum):
+    """Rolling provider/model health observations (C2 §30)."""
+    HEALTHY = "healthy"
+    DEGRADED = "degraded"
+    RATE_LIMITED = "rate_limited"
+    UNAVAILABLE = "unavailable"
+    UNKNOWN = "unknown"
+
+
+class CredentialType(str, Enum):
+    """How a credential was supplied to DSRT (C2 §13)."""
+    BYOK = "byok"
+    MANAGED = "managed"
+    ENTERPRISE = "enterprise"
+    PRIVATE_ENDPOINT = "private_endpoint"
+
+
+class CredentialStatus(str, Enum):
+    """Lifecycle of a stored credential."""
+    ACTIVE = "active"
+    DISABLED = "disabled"
+    REVOKED = "revoked"
+    EXPIRED = "expired"
+
+
+class ModelErrorCode(str, Enum):
+    """Normalized Model Fabric error codes (C2 §27, §35)."""
+    PROVIDER_TIMEOUT = "PROVIDER_TIMEOUT"
+    PROVIDER_UNAVAILABLE = "PROVIDER_UNAVAILABLE"
+    PROVIDER_RATE_LIMITED = "PROVIDER_RATE_LIMITED"
+    PROVIDER_OVERLOADED = "PROVIDER_OVERLOADED"
+    PROVIDER_INTERNAL_ERROR = "PROVIDER_INTERNAL_ERROR"
+    PROVIDER_INVALID_RESPONSE = "PROVIDER_INVALID_RESPONSE"
+
+    CREDENTIAL_INVALID = "CREDENTIAL_INVALID"
+    CREDENTIAL_REVOKED = "CREDENTIAL_REVOKED"
+    CREDENTIAL_MISSING = "CREDENTIAL_MISSING"
+
+    MODEL_NOT_FOUND = "MODEL_NOT_FOUND"
+    MODEL_UNAVAILABLE = "MODEL_UNAVAILABLE"
+    MODEL_CAPABILITY_UNSUPPORTED = "MODEL_CAPABILITY_UNSUPPORTED"
+
+    REQUEST_INVALID = "REQUEST_INVALID"
+    REQUEST_TOO_LARGE = "REQUEST_TOO_LARGE"
+    RESPONSE_SCHEMA_INVALID = "RESPONSE_SCHEMA_INVALID"
+
+    POLICY_DENIED = "POLICY_DENIED"
+    QUOTA_EXCEEDED = "QUOTA_EXCEEDED"
+    CONTENT_FILTERED = "CONTENT_FILTERED"
+
+    CONTEXT_TOO_LARGE = "CONTEXT_TOO_LARGE"
+    REQUEST_CANCELLED = "REQUEST_CANCELLED"
+
+
+class RetryClassification(str, Enum):
+    """How the retry engine should treat an error (C2 §27)."""
+    RETRYABLE = "retryable"
+    RETRYABLE_WITH_BACKOFF = "retryable_with_backoff"
+    NOT_RETRYABLE = "not_retryable"
+    FALLBACK_ELIGIBLE = "fallback_eligible"
+
+
+class RoutingReasonCode(str, Enum):
+    """Audit codes recorded on every RoutingDecision (C2 §19)."""
+    CAPABILITY_MATCH = "CAPABILITY_MATCH"
+    CAPABILITY_MISMATCH = "CAPABILITY_MISMATCH"
+    CONTEXT_REQUIREMENT_MET = "CONTEXT_REQUIREMENT_MET"
+    CONTEXT_REQUIREMENT_UNMET = "CONTEXT_REQUIREMENT_UNMET"
+    HEALTHY = "HEALTHY"
+    UNHEALTHY = "UNHEALTHY"
+    RATE_LIMITED = "RATE_LIMITED"
+    POLICY_ALLOWED = "POLICY_ALLOWED"
+    POLICY_BLOCKED = "POLICY_BLOCKED"
+    WITHIN_COST_LIMIT = "WITHIN_COST_LIMIT"
+    EXCEEDS_COST_LIMIT = "EXCEEDS_COST_LIMIT"
+    WITHIN_LATENCY_LIMIT = "WITHIN_LATENCY_LIMIT"
+    EXCEEDS_LATENCY_LIMIT = "EXCEEDS_LATENCY_LIMIT"
+    EXPLICIT_USER_SELECTION = "EXPLICIT_USER_SELECTION"
+    AGENT_PREFERENCE = "AGENT_PREFERENCE"
+    FALLBACK_SELECTED = "FALLBACK_SELECTED"
+    NO_CANDIDATES_AVAILABLE = "NO_CANDIDATES_AVAILABLE"
+
+
+# =============================================================================
+# C3 — Tool & Environment Fabric Enums
+# =============================================================================
+
+
+class ToolExecutionStatus(str, Enum):
+    """Lifecycle of a single tool invocation (C3 §16)."""
+    REQUESTED = "REQUESTED"
+    AUTHORIZING = "AUTHORIZING"
+    AUTHORIZED = "AUTHORIZED"
+    APPROVAL_REQUIRED = "APPROVAL_REQUIRED"
+    QUEUED = "QUEUED"
+    STARTED = "STARTED"
+    RUNNING = "RUNNING"
+    OBSERVING = "OBSERVING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLING = "CANCELLING"
+    CANCELLED = "CANCELLED"
+
+
+class ToolRiskLevel(str, Enum):
+    """Risk classification controlling authorization and approval (C3 §14)."""
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+class SideEffectClass(str, Enum):
+    """Side-effect classification of a tool action (C3 §48)."""
+    PURE = "PURE"
+    READ = "READ"
+    WRITE = "WRITE"
+    EXTERNAL_ACTION = "EXTERNAL_ACTION"
+    IRREVERSIBLE = "IRREVERSIBLE"
+
+
+class ObservationType(str, Enum):
+    """Normalized tool observation types (C3 §19)."""
+    PAGE_CONTENT = "PAGE_CONTENT"
+    SCREENSHOT = "SCREENSHOT"
+    FILE_CONTENT = "FILE_CONTENT"
+    FILE_METADATA = "FILE_METADATA"
+    DIRECTORY_LISTING = "DIRECTORY_LISTING"
+    COMMAND_OUTPUT = "COMMAND_OUTPUT"
+    DATABASE_RESULT = "DATABASE_RESULT"
+    HTTP_RESPONSE = "HTTP_RESPONSE"
+    DOM_STATE = "DOM_STATE"
+    ACCESSIBILITY_TREE = "ACCESSIBILITY_TREE"
+    SEARCH_RESULTS = "SEARCH_RESULTS"
+    PYTHON_RESULT = "PYTHON_RESULT"
+    STRUCTURED_DATA = "STRUCTURED_DATA"
+    TEXT = "TEXT"
+    ARTIFACT_REFERENCE = "ARTIFACT_REFERENCE"
+    ERROR = "ERROR"
+
+
+class ToolStatus(str, Enum):
+    """Lifecycle of a tool within the registry (C3 §33)."""
+    REGISTERED = "REGISTERED"
+    ACTIVE = "ACTIVE"
+    DEGRADED = "degraded"
+    DEPRECATED = "DEPRECATED"
+    ARCHIVED = "ARCHIVED"
+
+
+class ToolHealthStatus(str, Enum):
+    """Operational health of a tool implementation (C3 §51)."""
+    HEALTHY = "healthy"
+    DEGRADED = "degraded"
+    UNHEALTHY = "unhealthy"
+    UNKNOWN = "unknown"
+
+
+class EnvironmentStatus(str, Enum):
+    """Environment Runtime lifecycle (C3 §35)."""
+    REQUESTED = "REQUESTED"
+    PROVISIONING = "PROVISIONING"
+    READY = "READY"
+    ACTIVE = "ACTIVE"
+    IDLE = "IDLE"
+    TERMINATING = "TERMINATING"
+    TERMINATED = "TERMINATED"
+    FAILED = "FAILED"
+
+
+class EnvironmentType(str, Enum):
+    """Initial environment runtime types (C3 §34)."""
+    BROWSER = "BROWSER"
+    PYTHON = "PYTHON"
+    CONTAINER = "CONTAINER"
+    FILE = "FILE"
+    API = "API"
+
+
+class EnvironmentHealthStatus(str, Enum):
+    """Health of an environment instance."""
+    HEALTHY = "healthy"
+    DEGRADED = "degraded"
+    UNHEALTHY = "unhealthy"
+    UNKNOWN = "unknown"
+
+
+class WorldStatus(str, Enum):
+    """World lifecycle (C3 §39)."""
+    REGISTERED = "REGISTERED"
+    PROVISIONING = "PROVISIONING"
+    READY = "READY"
+    ACTIVE = "ACTIVE"
+    RESETTING = "RESETTING"
+    DESTROYING = "DESTROYING"
+    DESTROYED = "DESTROYED"
+    FAILED = "FAILED"
+
+
+class ApprovalStatus(str, Enum):
+    """Approval request lifecycle (C3 §15)."""
+    REQUESTED = "REQUESTED"
+    PENDING = "PENDING"
+    GRANTED = "GRANTED"
+    REJECTED = "REJECTED"
+    EXPIRED = "EXPIRED"
+    CANCELLED = "CANCELLED"
+
+
+class NetworkMode(str, Enum):
+    """Network policy mode for tools and environments (C3 §29)."""
+    OFFLINE = "offline"
+    RESTRICTED = "restricted"
+    CONTROLLED = "controlled"
+    OPEN = "open"
+    PROXY = "proxy"
+
+
+class FilesystemAccessMode(str, Enum):
+    """Filesystem access scope (C3 §24, §25)."""
+    NONE = "none"
+    WORKSPACE = "workspace"
+    WORKSPACE_READONLY = "workspace_readonly"
+    FULL = "full"
+
+
+
+# =============================================================================
+# C4 — Context & Memory Fabric Enums
+# =============================================================================
+
+
+class MemoryType(str, Enum):
+    """Distinct memory classes (C4 §4)."""
+    WORKING = "working"
+    EPISODIC = "episodic"
+    SEMANTIC = "semantic"
+    PROCEDURAL = "procedural"
+    ENTITY = "entity"
+    DOCUMENT = "document"
+
+
+class MemoryStatus(str, Enum):
+    """Memory lifecycle states (C4 §9)."""
+    PROPOSED = "PROPOSED"
+    VALIDATING = "VALIDATING"
+    ACTIVE = "ACTIVE"
+    UPDATED = "UPDATED"
+    SUPERSEDED = "SUPERSEDED"
+    ARCHIVED = "ARCHIVED"
+    EXPIRED = "EXPIRED"
+    REJECTED = "REJECTED"
+
+
+class MemoryScope(str, Enum):
+    """Memory access scope boundaries (C4 §7)."""
+    EXECUTION = "execution"
+    TASK = "task"
+    PROJECT = "project"
+    USER = "user"
+    AGENT = "agent"
+    ORGANIZATION = "organization"
+    WORLD = "world"
+
+
+class MemoryImportance(str, Enum):
+    """Memory retention priority (C4 §18)."""
+    TRIVIAL = "trivial"
+    NORMAL = "normal"
+    IMPORTANT = "important"
+    CRITICAL = "critical"
+
+
+class MemoryLinkType(str, Enum):
+    """Relationship types between memories (C4 §41)."""
+    SUPPORTS = "SUPPORTS"
+    CONTRADICTS = "CONTRADICTS"
+    DERIVED_FROM = "DERIVED_FROM"
+    RELATED_TO = "RELATED_TO"
+    SUPERSEDES = "SUPERSEDES"
+    REFINES = "REFINES"
+    ABOUT = "ABOUT"
+    DEPENDS_ON = "DEPENDS_ON"
+
+
+class MemoryVerificationState(str, Enum):
+    """Verification status of a memory (C4 §5)."""
+    UNVERIFIED = "UNVERIFIED"
+    VERIFIED = "VERIFIED"
+    CONTRADICTED = "CONTRADICTED"
+    DISPUTED = "DISPUTED"    

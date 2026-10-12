@@ -1,0 +1,5 @@
+RI-F002:
+  recovery:
+    - identify_missing_evidence
+    - downgrade_claim_status
+    - fail_verification

@@ -1,0 +1,13 @@
+id: reasoning.decomposition
+version: "1.0"
+
+procedure:
+  - identify_objective
+  - identify_scope
+  - generate_subquestions
+  - assign_priority
+  - construct_question_graph
+
+quality_checks:
+  - no_duplicate_questions
+  - material_questions_have_priority

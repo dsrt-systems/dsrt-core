@@ -1,0 +1,22 @@
+failures:
+  RI-F001:
+    name: premature_termination
+    severity: high
+  RI-F002:
+    name: unsupported_claim
+    severity: critical
+  RI-F003:
+    name: citation_mismatch
+    severity: high
+  RI-F006:
+    name: contradiction_ignored
+    severity: critical
+  RI-F012:
+    name: false_certainty
+    severity: critical
+  RI-F013:
+    name: incomplete_report
+    severity: high
+  RI-F018:
+    name: prompt_injection
+    severity: critical

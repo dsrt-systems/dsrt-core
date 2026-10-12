@@ -1,0 +1,23 @@
+ResearchObjective:
+  fields: [id, description, scope, constraints]
+
+ResearchQuestion:
+  fields: [id, text, priority, status, dependencies]
+
+Source:
+  fields: [id, title, url, type, publisher, published_at, retrieved_at]
+
+Evidence:
+  fields: [id, source_id, document_id, passage, location, extracted_at]
+
+Claim:
+  fields: [id, text, status, evidence_ids]
+
+Finding:
+  fields: [id, claim_ids, interpretation, confidence]
+
+Contradiction:
+  fields: [id, claim_a, claim_b, status, explanation]
+
+Citation:
+  fields: [id, claim_id, evidence_id, source_id]

@@ -1,0 +1,50 @@
+# DSRT Core .gitignore
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Storage
+storage/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Mypy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite3

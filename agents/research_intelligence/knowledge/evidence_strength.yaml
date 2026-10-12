@@ -1,0 +1,11 @@
+levels:
+  VERY_STRONG:
+    characteristics: [highly_relevant, direct_evidence, reliable_provenance, corroborated]
+  STRONG:
+    characteristics: [relevant, reliable_source, reasonably_direct]
+  MODERATE:
+    characteristics: [useful_but_limited, indirect_or_incomplete]
+  WEAK:
+    characteristics: [limited_reliability, indirect]
+  INSUFFICIENT:
+    characteristics: [cannot_support_claim]

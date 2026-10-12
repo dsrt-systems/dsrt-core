@@ -1,0 +1,12 @@
+version: "1.0"
+allowed_states:
+  - SUPPORTED
+  - PARTIALLY_SUPPORTED
+  - UNCERTAIN
+  - UNVERIFIED
+  - CONTRADICTED
+  - UNKNOWN
+
+rules:
+  - uncertainty_must_not_be_hidden
+  - contradictions_must_be_preserved

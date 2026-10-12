@@ -1,0 +1,48 @@
+identity:
+  id: research_intelligence
+  name: Research Intelligence Agent
+  version: 1.0.0
+  contract_version: "1.0"
+  publisher: dsrt
+  category: research
+
+capabilities:
+  - research_planning
+  - question_decomposition
+  - evidence_synthesis
+  - contradiction_detection
+  - report_generation
+
+requirements:
+  minimum_core_version: "1.0.0"
+  required_capabilities:
+    - research_planning
+    - evidence_synthesis
+    - report_generation
+  optional_capabilities:
+    - contradiction_detection
+    - question_decomposition
+  required_tools: []
+  optional_tools: []
+
+permissions:
+  network:
+    required: false
+  filesystem:
+    access: workspace
+  browser:
+    access: false
+  external_actions:
+    access: false
+
+configuration:
+  default_workflow: standard_research
+  min_questions: 2
+  max_questions: 6
+  min_claims_per_question: 1
+
+description: >
+  DSRT Research Intelligence Agent — deterministic professional research workflow.
+  Decomposes objectives into structured questions, extracts claims with provenance,
+  detects contradictions, verifies completeness, and produces citation-backed
+  research reports as durable artifacts.

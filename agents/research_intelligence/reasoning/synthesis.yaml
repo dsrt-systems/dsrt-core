@@ -1,0 +1,9 @@
+id: reasoning.synthesis
+version: "1.0"
+
+rules:
+  - distinguish_evidence_from_interpretation
+  - preserve_material_uncertainty
+  - avoid_overgeneralization
+  - connect_findings_to_questions
+  - avoid_claims_exceeding_evidence
