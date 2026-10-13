@@ -36,12 +36,12 @@ def _uid(prefix: str) -> str:
 
 
 class TestC2GoldenPath:
-    @patch("core.providers.google.adapter.genai.Client")
-    @patch("core.providers.openai.adapter.AsyncOpenAI")
+    @patch("core.providers.openai.adapter.OpenAIAdapter._get_client")
+    @patch("core.providers.google.adapter.GoogleAdapter._get_client")
     async def test_c2_model_switching_golden_path(
         self,
-        mock_openai_class,
-        mock_google_class,
+        mock_google_get_client,
+        mock_openai_get_client,
         auth_client: tuple[AsyncClient, str],
     ):
         client, token = auth_client
@@ -132,7 +132,7 @@ class TestC2GoldenPath:
         # -------------------------------------------------------------------
         # OpenAI Mock
         mock_oai = AsyncMock()
-        mock_openai_class.return_value = mock_oai
+        mock_openai_get_client.return_value = mock_oai
         mock_oai_choice = AsyncMock()
         mock_oai_choice.message.content = "OpenAI reasoning output."
         mock_oai_choice.message.tool_calls = None
@@ -147,7 +147,7 @@ class TestC2GoldenPath:
 
         # Google Mock
         mock_goog = MagicMock()
-        mock_google_class.return_value = mock_goog
+        mock_google_get_client.return_value = mock_goog
         mock_goog.aio = AsyncMock()
         mock_g_part = MagicMock()
         mock_g_part.text = "Gemini reasoning output."

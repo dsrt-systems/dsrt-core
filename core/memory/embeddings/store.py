@@ -35,6 +35,11 @@ class EmbeddingStore:
         self._session = session
         self._generator = generator or EmbeddingGenerator()
 
+    @property
+    def provider(self) -> str:
+        """The embedding provider strategy in use."""
+        return self._generator.provider
+
     async def create_embedding(
         self, memory_id: str, content: str,
     ) -> MemoryEmbeddingORM:
@@ -86,9 +91,7 @@ class EmbeddingStore:
     ) -> list[dict[str, Any]]:
         """Find memories most semantically similar to query text.
 
-        Uses cosine similarity. In production with pgvector native columns,
-        this will use the <=> operator for GPU-accelerated search.
-        For C4.5 v1 with JSON-stored embeddings, computes in Python.
+        Returns dicts with all fields needed by HybridRanker (C4.11 fix).
         """
         query_vector = await self._generator.generate(query_text)
 
@@ -135,7 +138,15 @@ class EmbeddingStore:
                     "scope_id": mem_orm.scope_id,
                     "importance": mem_orm.importance,
                     "status": mem_orm.status,
+                    "confidence": mem_orm.confidence,
+                    "verification_state": mem_orm.verification_state,
+                    "observed_at": mem_orm.observed_at.isoformat() if mem_orm.observed_at else None,
+                    "valid_from": mem_orm.valid_from.isoformat() if mem_orm.valid_from else None,
+                    "valid_until": mem_orm.valid_until.isoformat() if mem_orm.valid_until else None,
+                    "source_type": mem_orm.source_type,
+                    "source_id": mem_orm.source_id,
                     "created_at": mem_orm.created_at.isoformat() if mem_orm.created_at else None,
+                    "version": mem_orm.version,
                 })
 
         results.sort(key=lambda x: x["similarity"], reverse=True)

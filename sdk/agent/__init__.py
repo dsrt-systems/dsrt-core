@@ -32,6 +32,13 @@ from sdk.agent.interfaces.verification import (
 )
 from sdk.agent.sdk import DSRTAgentSDK
 
+from sdk.agent.interfaces.orchestration import (
+    OrchestrationSDK,
+    SDKDelegationResult,
+    SDKNodeInfo,
+    SDKPlanInfo,
+)
+
 __all__ = [
     # Contract
     "DSRTAgent",
@@ -62,4 +69,9 @@ __all__ = [
     "SDKMemoryRecord",
     "SDKArtifact",
     "SDKVerificationResult",
+    
+    "OrchestrationSDK",
+    "SDKPlanInfo",
+    "SDKNodeInfo",
+    "SDKDelegationResult",
 ]

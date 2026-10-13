@@ -20,8 +20,20 @@ class StateSDK(Protocol):
         """Set a state value."""
         ...
 
+    async def delete(self, key: str) -> None:
+        """Delete a state value."""
+        ...
+
     async def merge(self, patch: dict[str, Any]) -> None:
         """Merge a patch into agent state."""
+        ...
+
+    async def set_many(self, values: dict[str, Any]) -> None:
+        """Set multiple values at once."""
+        ...
+
+    async def clear(self) -> None:
+        """Clear all state."""
         ...
 
     async def snapshot(self) -> dict[str, Any]:

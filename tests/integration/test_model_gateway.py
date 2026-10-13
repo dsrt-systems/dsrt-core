@@ -27,9 +27,9 @@ def _uid(prefix: str) -> str:
 
 
 class TestModelGatewayIntegration:
-    @patch("core.providers.openai.adapter.AsyncOpenAI")
+    @patch("core.providers.openai.adapter.OpenAIAdapter._get_client")
     async def test_gateway_end_to_end_execution(
-        self, mock_openai_class, auth_client: tuple[AsyncClient, str]
+        self, mock_openai_get_client, auth_client: tuple[AsyncClient, str]
     ):
         client, token = auth_client
         headers = {"Authorization": f"Bearer {token}"}
@@ -113,7 +113,7 @@ class TestModelGatewayIntegration:
 
         # 3. Setup mock OpenAI response
         mock_client = AsyncMock()
-        mock_openai_class.return_value = mock_client
+        mock_openai_get_client.return_value = mock_client
         mock_choice = AsyncMock()
         mock_choice.message.content = "Model Gateway response."
         mock_choice.message.tool_calls = None

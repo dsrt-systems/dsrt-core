@@ -59,7 +59,7 @@ class ConflictDetector:
         """Analyze a proposal against existing memories in the same scope."""
         # Under local-hash mode (no real embedding model), search all scope candidates
         # so factual/numeric contradiction detection works deterministically in tests.
-        is_local = getattr(self._embeddings._generator, "provider", "") == "local-hash"
+        is_local = self._embeddings.provider == "local-hash"
         min_sim = -1.0 if is_local else self._conflict_threshold
 
         similar = await self._embeddings.search_similar(

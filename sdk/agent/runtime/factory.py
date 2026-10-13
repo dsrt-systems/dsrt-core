@@ -1,9 +1,8 @@
 """
-DSRTAgentSDK Factory (C3.7 Update).
+DSRTAgentSDK Factory (C5.11 Update).
 
 Assembles a fully-wired DSRTAgentSDK instance for a specific execution.
-Now binds the live ModelGateway to ModelSDKImpl AND the live Tool Fabric
-(Router + Permission Engine + Execution Engine) to ToolSDKImpl.
+Now includes the Orchestration SDK for multi-agent coordination.
 """
 
 from __future__ import annotations
@@ -27,6 +26,7 @@ from sdk.agent.adapters import (
     ToolSDKImpl,
     VerificationSDKImpl,
 )
+from sdk.agent.adapters.orchestration_adapter import OrchestrationSDKImpl
 from sdk.agent.sdk import DSRTAgentSDK
 
 
@@ -108,6 +108,14 @@ def build_agent_sdk(
         benchmark=BenchmarkSDKImpl(
             kernel=kernel,
             execution_id=execution_id,
+            agent_slug=agent_slug,
+        ),
+        orchestration=OrchestrationSDKImpl(
+            session=session,
+            kernel=kernel,
+            execution_id=execution_id,
+            task_id=task_id,
+            organization_id=organization_id,
             agent_slug=agent_slug,
         ),
         sdk_version=SDK_VERSION,

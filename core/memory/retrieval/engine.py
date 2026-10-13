@@ -9,8 +9,10 @@ from __future__ import annotations
 
 import asyncio
 import time
+from datetime import datetime
 from typing import Any
 
+from schemas.domain.enums import MemoryImportance, MemoryScope, MemoryStatus, MemoryType, MemoryVerificationState
 from schemas.domain.memory import (
     Memory,
     MemoryQuery,
@@ -55,7 +57,7 @@ class HybridRetrievalEngine:
 
         fetch_limit = query.limit * 3
 
-        # 1. Execute sub-queries concurrently (min_similarity=-1.0 to let ranker evaluate all candidates)
+        # 1. Execute sub-queries concurrently
         vector_task = asyncio.create_task(
             self._embeddings.search_similar(
                 query.query,
@@ -99,21 +101,41 @@ class HybridRetrievalEngine:
         keyword_results_orm = keyword_task.result() if not keyword_task.exception() else []
         temporal_results_orm = temporal_task.result() if (temporal_task and not temporal_task.exception()) else []
 
-        # 2. Hydrate vector results into Memory schemas
+        # 2. Hydrate vector results into Memory schemas with ALL fields
         vector_candidates = []
         for raw in vector_results_raw:
+            # Parse datetime strings back to datetime objects for the ranker
+            observed_at = None
+            if raw.get("observed_at"):
+                try:
+                    observed_at = datetime.fromisoformat(raw["observed_at"])
+                except (ValueError, TypeError):
+                    pass
+
+            created_at_val = None
+            if raw.get("created_at"):
+                try:
+                    created_at_val = datetime.fromisoformat(raw["created_at"])
+                except (ValueError, TypeError):
+                    pass
+
             mem_obj = Memory(
                 id=raw["memory_id"],
                 organization_id=organization_id,
-                scope_type=raw["scope_type"],
-                scope_id=raw["scope_id"],
-                memory_type=raw["memory_type"],
+                scope_type=raw.get("scope_type", "project"),
+                scope_id=raw.get("scope_id"),
+                memory_type=raw.get("memory_type", "semantic"),
                 content=raw["content"],
-                status=raw["status"],
-                importance=raw["importance"],
-                verification_state="UNVERIFIED",
-                created_at=raw["created_at"],
-                updated_at=raw["created_at"],
+                status=raw.get("status", "ACTIVE"),
+                importance=raw.get("importance", "normal"),
+                confidence=raw.get("confidence"),
+                verification_state=raw.get("verification_state", "UNVERIFIED"),
+                source_type=raw.get("source_type"),
+                source_id=raw.get("source_id"),
+                observed_at=observed_at,
+                version=raw.get("version", 1),
+                created_at=created_at_val or created_at_val,
+                updated_at=created_at_val or created_at_val,
             )
             vector_candidates.append({
                 "memory_id": mem_obj.id,

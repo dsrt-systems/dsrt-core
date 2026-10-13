@@ -7,6 +7,9 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
+from core.api.routers import memory as memory_router
+from core.api.routers import orchestration as orchestration_router
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -122,5 +125,8 @@ def create_app() -> FastAPI:
     app.include_router(artifacts_router.router)
     app.include_router(providers_router.router)
     app.include_router(credentials_router.router)
+    app.include_router(orchestration_router.router)
+    app.include_router(memory_router.router)
+    
 
     return app

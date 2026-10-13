@@ -22,8 +22,17 @@ class StateSDKImpl:
     async def set(self, key: str, value: Any) -> None:
         self._state[key] = value
 
+    async def delete(self, key: str) -> None:
+        self._state.pop(key, None)
+
     async def merge(self, patch: dict[str, Any]) -> None:
         self._state.update(patch)
+
+    async def set_many(self, values: dict[str, Any]) -> None:
+        self._state.update(values)
+
+    async def clear(self) -> None:
+        self._state.clear()
 
     async def snapshot(self) -> dict[str, Any]:
         return dict(self._state)

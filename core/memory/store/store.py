@@ -18,8 +18,9 @@ from schemas.domain.enums import MemoryScope, MemoryStatus, MemoryType
 from schemas.domain.memory import Memory, MemoryCreate, MemorySource, MemoryUpdate
 
 from core.api.errors.exceptions import NotFoundError, ValidationError
-from core.memory.conflicts.detector import ConflictDetector
+from core.memory.conflicts.detector import ConflictDetectionResult, ConflictDetector
 from core.memory.embeddings.store import EmbeddingStore
+from core.memory.observability import MemoryEventEmitter
 from core.observability.logging import get_logger
 from core.repositories.memory_repository import MemoryRepository
 from core.storage.models.memory import MemoryORM
@@ -35,9 +36,11 @@ class MemoryStore:
         self,
         repo: MemoryRepository,
         embedding_store: EmbeddingStore | None = None,
+        event_emitter: MemoryEventEmitter | None = None,
     ) -> None:
         self._repo = repo
         self._embedding_store = embedding_store
+        self._event_emitter = event_emitter or MemoryEventEmitter()
 
     async def write(
         self,
@@ -53,6 +56,7 @@ class MemoryStore:
         self._validate_proposal(proposal)
 
         # 2. Check for duplicates & conflicts if embedding store is available
+        detection_res: ConflictDetectionResult | None = None
         if self._embedding_store:
             detector = ConflictDetector(self._repo, self._embedding_store)
             detection_res = await detector.analyze_proposal(organization_id, proposal)
@@ -68,6 +72,10 @@ class MemoryStore:
                     logger.info(
                         "memory_deduplicated_existing_refreshed",
                         memory_id=existing_orm.id,
+                    )
+                    await self._event_emitter.memory_deduplicated(
+                        existing_orm.id,
+                        execution_id=execution_id,
                     )
                     return self._to_domain(existing_orm)
 
@@ -99,22 +107,30 @@ class MemoryStore:
             author=created_by or agent_slug,
         )
 
-        # 5. Generate and store embedding
+        # 5. Generate and store embedding + handle conflicts
         if self._embedding_store:
             await self._embedding_store.create_embedding(mem_orm.id, proposal.content)
 
-            # Check conflicts and record if detected
-            if detection_res.action_taken == "CONFLICT_DETECTED":
-                for conf_id in detection_res.conflicting_memory_ids:
+            if detection_res and detection_res.action_taken == "CONFLICT_DETECTED":
+                for idx, conf_id in enumerate(detection_res.conflicting_memory_ids):
+                    desc = (
+                        detection_res.conflict_descriptions[idx]
+                        if idx < len(detection_res.conflict_descriptions)
+                        else "Contradiction detected during proposal write."
+                    )
                     await self._repo.create_conflict(
                         memory_a_id=mem_orm.id,
                         memory_b_id=conf_id,
-                        description=f"Contradiction detected during proposal write.",
+                        description=desc,
                     )
                     await self._repo.create_link(
                         source_memory_id=mem_orm.id,
                         target_memory_id=conf_id,
                         link_type="CONTRADICTS",
+                    )
+                    await self._event_emitter.memory_conflict_detected(
+                        mem_orm.id, conf_id, desc,
+                        execution_id=execution_id,
                     )
 
         # 6. Attach source provenance if provided
@@ -140,6 +156,15 @@ class MemoryStore:
             agent_slug=agent_slug,
             execution_id=execution_id,
             result="ALLOWED",
+        )
+
+        # 8. Emit MEMORY_CREATED event
+        await self._event_emitter.memory_created(
+            memory_id=mem_orm.id,
+            memory_type=proposal.memory_type.value,
+            scope=proposal.scope.value,
+            importance=proposal.importance.value,
+            execution_id=execution_id,
         )
 
         logger.info(
@@ -177,7 +202,7 @@ class MemoryStore:
         if not mem_orm or mem_orm.organization_id != organization_id:
             raise NotFoundError(f"Memory '{memory_id}' not found.")
 
-        # Determine what changed
+        # Capture old content before update
         old_content = mem_orm.content
         new_content = patch.content or old_content
 
@@ -196,7 +221,7 @@ class MemoryStore:
 
         # Create version snapshot if content changed
         if patch.content and patch.content != old_content:
-            prev_version = mem_orm.version
+            prev_version = mem_orm.version - 1  # version was already incremented
             new_version = await self._repo.increment_version(mem_orm)
             await self._repo.create_version(
                 memory_id=memory_id,
@@ -217,6 +242,13 @@ class MemoryStore:
             scope_id=mem_orm.scope_id,
             execution_id=execution_id,
             result="ALLOWED",
+        )
+
+        # Emit MEMORY_UPDATED event
+        await self._event_emitter.memory_updated(
+            memory_id=memory_id,
+            version=mem_orm.version,
+            execution_id=execution_id,
         )
 
         logger.info(
@@ -246,6 +278,11 @@ class MemoryStore:
             scope_type=mem_orm.scope_type,
             scope_id=mem_orm.scope_id,
             result="ALLOWED",
+        )
+
+        # Emit MEMORY_ARCHIVED event
+        await self._event_emitter.memory_archived(
+            memory_id=memory_id,
         )
 
         logger.info("memory_archived", memory_id=memory_id)
@@ -281,7 +318,6 @@ class MemoryStore:
         metadata: dict[str, Any] | None = None,
     ) -> None:
         """Create a directed link between two memories."""
-        # Verify both memories exist and belong to the same org
         source = await self._repo.get_by_id(source_memory_id)
         target = await self._repo.get_by_id(target_memory_id)
 
