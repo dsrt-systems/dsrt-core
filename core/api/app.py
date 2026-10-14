@@ -31,6 +31,7 @@ from core.observability.middleware import ObservabilityMiddleware
 from core.storage.database import db_manager
 from core.version import AGENT_CONTRACT_VERSION, CORE_VERSION, SDK_VERSION
 
+from core.api.routers import verification as verification_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -126,6 +127,7 @@ def create_app() -> FastAPI:
     app.include_router(providers_router.router)
     app.include_router(credentials_router.router)
     app.include_router(orchestration_router.router)
+    app.include_router(verification_router.router)
     app.include_router(memory_router.router)
     
 

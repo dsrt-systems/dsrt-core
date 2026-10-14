@@ -18,6 +18,9 @@ from core.repositories.usage_repository import UsageRepository
 from core.repositories.user_repository import UserRepository
 from core.repositories.world_repository import WorldRepository
 
+from core.repositories.claim_repository import ClaimRepository
+from core.repositories.evidence_repository import EvidenceRepository
+
 __all__ = [
     "AgentRepository",
     "ApprovalRepository",
@@ -36,4 +39,6 @@ __all__ = [
     "UsageRepository",
     "UserRepository",
     "WorldRepository",
+    "ClaimRepository", 
+    "EvidenceRepository"
 ]

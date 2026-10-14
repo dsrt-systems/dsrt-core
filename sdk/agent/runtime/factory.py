@@ -97,6 +97,7 @@ def build_agent_sdk(
         verification=VerificationSDKImpl(
             session=session,
             execution_id=execution_id,
+            kernel=kernel,
         ),
         state=StateSDKImpl(),
         logging=LoggingSDKImpl(

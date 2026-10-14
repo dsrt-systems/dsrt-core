@@ -212,6 +212,27 @@ from schemas.domain.context import (
     ContextProfile,
 )
 
+
+# --- C6 Verification & Reliability Fabric ---
+from schemas.domain.verification import (
+    C6RecoveryDecision,
+    C6VerificationResult,
+    Claim,
+    ClaimVerification,
+    ConfidenceRecord,
+    Constraint,
+    ConstraintResult,
+    Evidence,
+    EvidenceReference,
+    FailureAction,
+    ReliabilityIncident,
+    Requirement,
+    ReviewRequest,
+    VerificationCheckResult,
+    VerificationPolicy,
+    VerificationThresholds,
+)
+
 __all__ = [
     # --- C1 Enums ---
     "AgentStatus",
@@ -401,4 +422,22 @@ __all__ = [
     "ContextBuildRequest",
     "ContextBuildResult",
     "ContextProfile",
+
+    # --- C6 Verification & Reliability Fabric ---
+    "C6RecoveryDecision",
+    "C6VerificationResult",
+    "Claim",
+    "ClaimVerification",
+    "ConfidenceRecord",
+    "Constraint",
+    "ConstraintResult",
+    "Evidence",
+    "EvidenceReference",
+    "FailureAction",
+    "ReliabilityIncident",
+    "Requirement",
+    "ReviewRequest",
+    "VerificationCheckResult",
+    "VerificationPolicy",
+    "VerificationThresholds",
 ]
