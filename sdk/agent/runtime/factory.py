@@ -28,7 +28,8 @@ from sdk.agent.adapters import (
 )
 from sdk.agent.adapters.orchestration_adapter import OrchestrationSDKImpl
 from sdk.agent.sdk import DSRTAgentSDK
-
+from sdk.agent.adapters.world_adapter import WorldSDKImpl
+from sdk.agent.adapters.arena_adapter import ArenaSDKImpl
 
 def build_agent_sdk(
     *,
@@ -118,6 +119,16 @@ def build_agent_sdk(
             task_id=task_id,
             organization_id=organization_id,
             agent_slug=agent_slug,
+        ),
+        world=WorldSDKImpl(
+            session=session,
+            execution_id=execution_id,
+            organization_id=organization_id,
+        ),
+        arena=ArenaSDKImpl(
+            session=session,
+            agent_slug=agent_slug,
+            agent_version=agent_version,
         ),
         sdk_version=SDK_VERSION,
         contract_version=AGENT_CONTRACT_VERSION,

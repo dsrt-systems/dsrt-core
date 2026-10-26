@@ -82,10 +82,17 @@ class CredentialManager:
         )
 
     async def list_credentials(
-        self, organization_id: str, provider_id: str | None = None
+        self,
+        organization_id: str,
+        provider_id: str | None = None,
+        include_revoked: bool = False,
     ) -> list[CredentialReference]:
         """List opaque credential references for an organization."""
-        creds = await self._cred_repo.list_by_organization(organization_id, provider_id)
+        creds = await self._cred_repo.list_by_organization(
+            organization_id=organization_id,
+            provider_id=provider_id,
+            include_revoked=include_revoked,
+        )
         return [
             CredentialReference(
                 id=c.id,

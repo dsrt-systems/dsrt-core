@@ -49,10 +49,12 @@ class VerificationSDKImpl:
         session: AsyncSession,
         execution_id: str,
         kernel: ExecutionKernel | None = None,
+        organization_id: str = "",
     ) -> None:
         self._session = session
         self._execution_id = execution_id
         self._kernel = kernel
+        self._organization_id = organization_id
 
         # Lazy-initialized services
         self._engine: VerificationEngine | None = None
@@ -60,7 +62,20 @@ class VerificationSDKImpl:
 
     def _get_engine(self) -> VerificationEngine:
         if self._engine is None:
-            self._engine = VerificationEngine(self._session, self._kernel)
+            # VerificationEngine requires keyword-only execution_id + organization_id
+            # (bound at construction; never taken from agent-controllable request metadata).
+            org_id = self._organization_id
+            if not org_id and self._kernel is not None:
+                org_id = getattr(self._kernel, "organization_id", "") or ""
+            if not org_id:
+                org_id = "org_default"
+
+            self._engine = VerificationEngine(
+                self._session,
+                self._kernel,
+                execution_id=self._execution_id,
+                organization_id=org_id,
+            )
         return self._engine
 
     def _get_evidence_store(self) -> EvidenceStore:

@@ -5,11 +5,13 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.api.dependencies import get_security_context, get_session
+from core.api.dependencies import get_security_context
 from core.models.registry.registry import ModelRegistry
 from core.repositories import ProviderRepository
 from core.security.context import SecurityContext
+from core.storage.database import get_db_session
 from schemas.api.models import ModelListResponse, ProviderListResponse
 from schemas.domain import Model, ModelCreate, Provider, ProviderCreate
 
@@ -17,11 +19,9 @@ from schemas.domain import Model, ModelCreate, Provider, ProviderCreate
 router = APIRouter(tags=["model_fabric"])
 
 
-def get_model_registry(session=Depends(get_session)) -> ModelRegistry:
+def get_model_registry(session: AsyncSession = Depends(get_db_session)) -> ModelRegistry:
     return ModelRegistry(ProviderRepository(session))
 
-
-# --- Providers ---
 
 @router.get("/api/v1/providers", response_model=ProviderListResponse)
 async def list_providers(
@@ -32,17 +32,18 @@ async def list_providers(
     return ProviderListResponse(providers=providers, total=len(providers))
 
 
-@router.post("/api/v1/providers", response_model=Provider, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/api/v1/providers",
+    response_model=Provider,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_provider(
     body: ProviderCreate,
     registry: ModelRegistry = Depends(get_model_registry),
     context: SecurityContext = Depends(get_security_context),
 ) -> Provider:
-    # Requires Admin/System permissions (enforced by C1.4 PermissionEngine in later phases)
     return await registry.register_provider(body)
 
-
-# --- Models ---
 
 @router.get("/api/v1/models", response_model=ModelListResponse)
 async def list_models(
@@ -63,7 +64,11 @@ async def get_model(
     return await registry.get_model(model_id)
 
 
-@router.post("/api/v1/models", response_model=Model, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/api/v1/models",
+    response_model=Model,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_model(
     body: ModelCreate,
     registry: ModelRegistry = Depends(get_model_registry),

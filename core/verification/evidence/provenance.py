@@ -31,7 +31,7 @@ This module provides:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -311,3 +311,27 @@ class EvidenceProvenanceTracker:
                 complete_chains / len(claims) if claims else 0.0
             ),
         }
+
+def evidence_is_expired(evidence: Any, now: datetime | None = None) -> bool:
+    """Check whether an evidence item is past its validity window.
+
+    Used by CitationVerifier (C6 §18) and ClaimVerifier (C6 §15).
+    """
+    if now is None:
+        now = datetime.now(timezone.utc)
+
+    status = getattr(evidence, "verification_status", None)
+    if status == "EXPIRED":
+        return True
+
+    valid_until = (
+        getattr(evidence, "valid_until", None)
+        or getattr(evidence, "expires_at", None)
+    )
+    if valid_until is not None:
+        if getattr(valid_until, "tzinfo", None) is None:
+            valid_until = valid_until.replace(tzinfo=timezone.utc)
+        if now >= valid_until:
+            return True
+
+    return False

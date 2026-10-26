@@ -38,6 +38,18 @@ from sdk.agent.interfaces.orchestration import (
     SDKNodeInfo,
     SDKPlanInfo,
 )
+from sdk.agent.interfaces.world import (
+    SDKWorldInfo,
+    SDKWorldObservation,
+    SDKWorldResources,
+    WorldSDK,
+)
+
+
+from sdk.agent.interfaces.arena import (
+    ArenaSDK,
+    SDKArenaResult,
+)
 
 __all__ = [
     # Contract
@@ -74,4 +86,14 @@ __all__ = [
     "SDKPlanInfo",
     "SDKNodeInfo",
     "SDKDelegationResult",
+
+
+    "WorldSDK",
+    "SDKWorldInfo",
+    "SDKWorldObservation",
+    "SDKWorldResources",
+
+
+    "ArenaSDK",
+    "SDKArenaResult",
 ]

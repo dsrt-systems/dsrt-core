@@ -18,8 +18,10 @@ You are the DSRT Orchestration Planner. Your job is to decompose a user \
 objective into an executable task graph (DAG) of nodes and dependencies.
 
 RULES:
-1. Each node must have a unique `node_key` (lowercase, underscores).
-2. Each node must specify `node_type` from: AGENT_TASK, VERIFICATION, \
+1. Each node must have a unique 
+ode_key` (lowercase, underscores).
+2. Each node must specify 
+ode_type` from: AGENT_TASK, VERIFICATION, \
 CONDITION, MERGE, CHECKPOINT, HUMAN_APPROVAL.
 3. Each node must list `required_capabilities` — the capabilities needed \
 to execute it. Use ONLY capabilities from the AVAILABLE CAPABILITIES list.

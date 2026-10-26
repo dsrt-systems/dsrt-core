@@ -5,12 +5,10 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.agents.registry import AgentRegistry
-from core.api.dependencies import (
-    get_security_context,
-    get_session,
-)
+from core.api.dependencies import get_security_context
 from core.kernel.kernel import ExecutionKernel
 from core.repositories import (
     AgentRepository,
@@ -20,6 +18,7 @@ from core.repositories import (
     TaskRepository,
 )
 from core.security.context import SecurityContext
+from core.storage.database import get_db_session
 from schemas.api.executions import ExecutionResponse, ExecutionTelemetryResponse
 from schemas.domain import Artifact, Execution, ExecutionEvent, UsageRecord
 
@@ -27,7 +26,7 @@ from schemas.domain import Artifact, Execution, ExecutionEvent, UsageRecord
 router = APIRouter(prefix="/api/v1/executions", tags=["executions"])
 
 
-def get_kernel(session=Depends(get_session)) -> ExecutionKernel:
+def get_kernel(session: AsyncSession = Depends(get_db_session)) -> ExecutionKernel:
     task_repo = TaskRepository(session)
     exe_repo = ExecutionRepository(session)
     agent_repo = AgentRepository(session)
@@ -42,7 +41,9 @@ def get_kernel(session=Depends(get_session)) -> ExecutionKernel:
     )
 
 
-def get_execution_repository(session=Depends(get_session)) -> ExecutionRepository:
+def get_execution_repository(
+    session: AsyncSession = Depends(get_db_session),
+) -> ExecutionRepository:
     return ExecutionRepository(session)
 
 
@@ -55,6 +56,7 @@ async def get_execution(
     exe_orm = await exe_repo.get_by_id(execution_id)
     if not exe_orm or not context.is_member_of(exe_orm.organization_id):
         from core.api.errors.exceptions import NotFoundError
+
         raise NotFoundError(f"Execution '{execution_id}' not found.")
     return Execution.model_validate(exe_orm, from_attributes=True)
 
@@ -86,6 +88,7 @@ async def get_execution_telemetry(
     exe_orm = await exe_repo.get_by_id(execution_id)
     if not exe_orm or not context.is_member_of(exe_orm.organization_id):
         from core.api.errors.exceptions import NotFoundError
+
         raise NotFoundError(f"Execution '{execution_id}' not found.")
 
     exe_schema = Execution.model_validate(exe_orm, from_attributes=True)

@@ -106,11 +106,13 @@ class TaskGraph:
         return self._nodes[key]
 
     def get_dependencies(self, node_key: str) -> set[str]:
-        """Get the set of node keys that `node_key` depends on (upstream)."""
+        """Get the set of node keys that 
+ode_key` depends on (upstream)."""
         return set(self._reverse.get(node_key, set()))
 
     def get_dependents(self, node_key: str) -> set[str]:
-        """Get the set of node keys that depend on `node_key` (downstream)."""
+        """Get the set of node keys that depend on 
+ode_key` (downstream)."""
         return set(self._forward.get(node_key, set()))
 
     def get_all_downstream(self, node_key: str) -> set[str]:

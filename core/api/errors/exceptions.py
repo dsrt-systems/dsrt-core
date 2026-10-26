@@ -81,3 +81,7 @@ class ResourceLimitError(DSRTError):
 class AgentNotFoundError(DSRTError):
     error_code = ErrorCode.AGENT_NOT_FOUND
     http_status = 404
+
+
+# Alias used by orchestration router
+ForbiddenError = AuthorizationError

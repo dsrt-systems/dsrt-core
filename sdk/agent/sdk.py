@@ -20,6 +20,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from sdk.agent.interfaces.artifact import ArtifactSDK
+from sdk.agent.interfaces.arena import ArenaSDK
 from sdk.agent.interfaces.benchmark import BenchmarkSDK
 from sdk.agent.interfaces.context import ContextSDK
 from sdk.agent.interfaces.events import EventSDK
@@ -30,6 +31,7 @@ from sdk.agent.interfaces.orchestration import OrchestrationSDK
 from sdk.agent.interfaces.state import StateSDK
 from sdk.agent.interfaces.tools import ToolSDK
 from sdk.agent.interfaces.verification import VerificationSDK
+from sdk.agent.interfaces.world import WorldSDK
 
 
 @dataclass(frozen=True)
@@ -47,6 +49,8 @@ class DSRTAgentSDK:
     logging: LoggingSDK
     benchmark: BenchmarkSDK
     orchestration: OrchestrationSDK | None = None
+    world: WorldSDK | None = None
+    arena: ArenaSDK | None = None
 
     # SDK version stamped at injection time — agents can gate on this.
     sdk_version: str = "1.0.0"

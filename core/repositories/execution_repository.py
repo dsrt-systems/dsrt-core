@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import secrets
+
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
@@ -18,7 +20,7 @@ class ExecutionRepository(Repository):
                 selectinload(Execution.task),
                 selectinload(Execution.events),
                 selectinload(Execution.artifacts),
-                selectinload(Execution.usage_records),  # <--- Added to prevent MissingGreenlet
+                selectinload(Execution.usage_records),
             )
             .where(Execution.id == execution_id),
         )
@@ -46,6 +48,7 @@ class ExecutionRepository(Repository):
         resource_limits: dict | None = None,
     ) -> Execution:
         execution = Execution(
+            id=f"exe_{secrets.token_urlsafe(20)}",
             task_id=task_id,
             organization_id=organization_id,
             core_version=core_version,

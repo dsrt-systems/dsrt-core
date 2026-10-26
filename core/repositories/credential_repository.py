@@ -1,56 +1,23 @@
-"""
-Credential Repository.
-
-Data access for encrypted credentials.
-"""
-
+"""Credential Repository."""
 from __future__ import annotations
 
-from datetime import datetime
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy import delete, select
 
 from core.repositories.base import Repository
-from core.storage.models import Credential
-from core.storage.models.mixins import utcnow
+from core.storage.models.credential import Credential
 
 
 class CredentialRepository(Repository):
-    async def get_by_id(self, credential_id: str) -> Credential | None:
-        result = await self._session.execute(
-            select(Credential)
-            .options(selectinload(Credential.provider))
-            .where(Credential.id == credential_id)
-        )
-        return result.scalar_one_or_none()
-
-    async def list_by_organization(
-        self, organization_id: str, provider_id: str | None = None
-    ) -> list[Credential]:
-        stmt = (
-            select(Credential)
-            .options(selectinload(Credential.provider))
-            .where(
-                Credential.organization_id == organization_id,
-                Credential.status == "active",
-            )
-        )
-        if provider_id:
-            stmt = stmt.where(Credential.provider_id == provider_id)
-
-        result = await self._session.execute(stmt.order_by(Credential.created_at.desc()))
-        return list(result.scalars().all())
+    """Repository for Credential ORM model."""
 
     async def create(
         self,
-        *,
         organization_id: str,
         provider_id: str,
         credential_type: str,
         label: str,
         encrypted_secret: str,
         redacted_preview: str,
-        expires_at: datetime | None = None,
     ) -> Credential:
         cred = Credential(
             organization_id=organization_id,
@@ -59,17 +26,40 @@ class CredentialRepository(Repository):
             label=label,
             encrypted_secret=encrypted_secret,
             redacted_preview=redacted_preview,
-            status="active",
-            expires_at=expires_at,
         )
         self._session.add(cred)
         await self._session.flush()
         return cred
 
-    async def mark_used(self, credential: Credential) -> None:
-        credential.last_used_at = utcnow()
+    async def get_by_id(self, credential_id: str) -> Credential | None:
+        result = await self._session.execute(
+            select(Credential).where(Credential.id == credential_id)
+        )
+        return result.scalar_one_or_none()
+
+    async def list_by_organization(
+        self,
+        organization_id: str,
+        provider_id: str | None = None,
+        include_revoked: bool = False,
+    ) -> list[Credential]:
+        """List credentials for an organization, optionally filtered by provider and revocation status."""
+        stmt = select(Credential).where(Credential.organization_id == organization_id)
+        if not include_revoked:
+            stmt = stmt.where(Credential.status != "revoked")
+        if provider_id:
+            stmt = stmt.where(Credential.provider_id == provider_id)
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())
+
+    async def revoke(self, cred: Credential) -> None:
+        """Mark a credential as revoked."""
+        cred.status = "revoked"
         await self._session.flush()
 
-    async def revoke(self, credential: Credential) -> None:
-        credential.status = "revoked"
+    async def delete(self, credential_id: str) -> bool:
+        result = await self._session.execute(
+            delete(Credential).where(Credential.id == credential_id)
+        )
         await self._session.flush()
+        return result.rowcount > 0

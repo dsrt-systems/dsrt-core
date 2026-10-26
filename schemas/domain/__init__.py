@@ -212,7 +212,6 @@ from schemas.domain.context import (
     ContextProfile,
 )
 
-
 # --- C6 Verification & Reliability Fabric ---
 from schemas.domain.verification import (
     C6RecoveryDecision,
@@ -231,6 +230,110 @@ from schemas.domain.verification import (
     VerificationCheckResult,
     VerificationPolicy,
     VerificationThresholds,
+)
+
+# --- C8 Arena & Evaluation Fabric ---
+from schemas.domain.arena import (
+    ArenaResult,
+    ArenaRun,
+    Benchmark,
+    BenchmarkConstraints,
+    EvaluatorConfig,
+    Experiment,
+    ExperimentConfiguration,
+    MetricResult,
+    PerformanceProfile,
+    RegressionResult,
+    TaskDefinition,
+    TaskInstance,
+    TaskSuccessConditions,
+    Trajectory,
+    TrajectoryEvent,
+)
+
+# --- C10 Unified Execution & Comparison Engine ---
+from schemas.domain.enums import (
+    AmplificationStageStatus,
+    AmplificationStrategy,
+    BudgetCheckpoint,
+    BudgetDecision,
+    BudgetDimension,
+    C10ExecutionMode,
+    C10ExecutionProtocol,
+    C10ExecutionStatus,
+    C10ExecutionStatusEnum,
+    C10StepKind,
+    C10StepStatus,
+    ClaimActionType,
+    ClaimClassification,
+    ComparisonDimension,
+    ComparisonMode,
+    ComparisonOutcome,
+    ComparisonStatus,
+    ConnectionStatus,
+    CostCategory,
+    Currency,
+    EvaluationBackend,
+    EvaluationDimensionEnum,
+    EvidenceQualificationLevel,
+    ExecutionMode,
+    ExecutionProtocol,
+    PricingSource,
+    PricingUnit,
+    ProfileFreshness,
+    ProfileTier,
+    StageStatus,
+    StepKind,
+    StepStatus,
+)
+from schemas.domain.execution_c10 import (
+    ExecutionConfiguration,
+    ExecutionConfigurationCreate,
+    ExecutionStep,
+    ExecutionTrace,
+    ExecutionTraceCreate,
+)
+from schemas.domain.comparison import (
+    ComparisonExperiment,
+    ComparisonExperimentCreate,
+    ComparisonResult,
+    ComparisonRun,
+    DimensionComparison,
+)
+from schemas.domain.pricing import (
+    PricingLookupResult,
+    PricingSnapshot,
+    PricingSnapshotCreate,
+)
+from schemas.domain.budget import (
+    BudgetCheckpointRecord,
+    BudgetGuardResult,
+    CostLedgerEntry,
+    CostLedgerEntryCreate,
+    IdempotencyKeyRecord,
+)
+from schemas.domain.profile_c10 import (
+    ExecutionProfile,
+    ModelConnection,
+    ModelFingerprint,
+    ModelFingerprintCreate,
+    ModelProfile,
+)
+from schemas.domain.execution_claim import (
+    ClaimClassificationRequest,
+    ExecutionClaim,
+    ExecutionClaimCreate,
+)
+from schemas.domain.evaluation_c10 import (
+    DimensionScore,
+    EvaluationDimension,
+    EvaluationRequest,
+    EvaluationResult,
+)
+from schemas.domain.amplification import (
+    AmplificationPlan,
+    AmplificationStage,
+    StrategyRegistration,
 )
 
 __all__ = [
@@ -405,8 +508,6 @@ __all__ = [
     "WorldPolicy",
     "WorldSnapshot",
     "WorldVersion",
-
-
     # --- C4 Context & Memory Fabric ---
     "Memory",
     "MemoryConflict",
@@ -422,7 +523,6 @@ __all__ = [
     "ContextBuildRequest",
     "ContextBuildResult",
     "ContextProfile",
-
     # --- C6 Verification & Reliability Fabric ---
     "C6RecoveryDecision",
     "C6VerificationResult",
@@ -440,4 +540,94 @@ __all__ = [
     "VerificationCheckResult",
     "VerificationPolicy",
     "VerificationThresholds",
+    # --- C8 Arena & Evaluation Fabric ---
+    "ArenaResult",
+    "ArenaRun",
+    "Benchmark",
+    "BenchmarkConstraints",
+    "EvaluatorConfig",
+    "Experiment",
+    "ExperimentConfiguration",
+    "MetricResult",
+    "PerformanceProfile",
+    "RegressionResult",
+    "TaskDefinition",
+    "TaskInstance",
+    "TaskSuccessConditions",
+    "Trajectory",
+    "TrajectoryEvent",
+    # --- C10 Enums ---
+    "AmplificationStageStatus",
+    "AmplificationStrategy",
+    "BudgetCheckpoint",
+    "BudgetDecision",
+    "BudgetDimension",
+    "C10ExecutionMode",
+    "C10ExecutionProtocol",
+    "C10ExecutionStatus",
+    "C10ExecutionStatusEnum",
+    "C10StepKind",
+    "C10StepStatus",
+    "ClaimActionType",
+    "ClaimClassification",
+    "ComparisonDimension",
+    "ComparisonMode",
+    "ComparisonOutcome",
+    "ComparisonStatus",
+    "ConnectionStatus",
+    "CostCategory",
+    "Currency",
+    "EvaluationBackend",
+    "EvaluationDimensionEnum",
+    "EvidenceQualificationLevel",
+    "ExecutionMode",
+    "ExecutionProtocol",
+    "PricingSource",
+    "PricingUnit",
+    "ProfileFreshness",
+    "ProfileTier",
+    "StageStatus",
+    "StepKind",
+    "StepStatus",
+    # --- C10 Execution ---
+    "ExecutionConfiguration",
+    "ExecutionConfigurationCreate",
+    "ExecutionStep",
+    "ExecutionTrace",
+    "ExecutionTraceCreate",
+    # --- C10 Comparison ---
+    "ComparisonExperiment",
+    "ComparisonExperimentCreate",
+    "ComparisonResult",
+    "ComparisonRun",
+    "DimensionComparison",
+    # --- C10 Pricing ---
+    "PricingLookupResult",
+    "PricingSnapshot",
+    "PricingSnapshotCreate",
+    # --- C10 Budget & Cost ---
+    "BudgetCheckpointRecord",
+    "BudgetGuardResult",
+    "CostLedgerEntry",
+    "CostLedgerEntryCreate",
+    "IdempotencyKeyRecord",
+    # --- C10 Profiles ---
+    "ExecutionProfile",
+    "ModelConnection",
+    "ModelFingerprint",
+    "ModelFingerprintCreate",
+    "ModelProfile",
+    # --- C10 Claims ---
+    "ClaimClassificationRequest",
+    "ExecutionClaim",
+    "ExecutionClaimCreate",
+    # --- C10 Evaluation ---
+    "DimensionScore",
+    "EvaluationDimension",
+    "EvaluationRequest",
+    "EvaluationResult",
+    # --- C10 Amplification ---
+    "AmplificationPlan",
+    "AmplificationStage",
+    "StrategyRegistration",
 ]

@@ -154,7 +154,6 @@ class EventType(str, Enum):
     MODEL_CHECKPOINT_CREATED = "MODEL_CHECKPOINT_CREATED"
     MODEL_SESSION_SWITCHED = "MODEL_SESSION_SWITCHED"
 
-
     # --- C3 Tool & Environment Fabric Event Types (C3 §45) ---
     TOOL_REQUESTED = "TOOL_REQUESTED"
     TOOL_AUTHORIZATION_STARTED = "TOOL_AUTHORIZATION_STARTED"
@@ -187,7 +186,6 @@ class EventType(str, Enum):
     WORLD_RESET = "WORLD_RESET"
     WORLD_DESTROYED = "WORLD_DESTROYED"
 
-
     # --- C4 Context & Memory Fabric Event Types (C4 §52) ---
     MEMORY_PROPOSED = "MEMORY_PROPOSED"
     MEMORY_VALIDATED = "MEMORY_VALIDATED"
@@ -207,7 +205,7 @@ class EventType(str, Enum):
     CONTEXT_COMPRESSION_STARTED = "CONTEXT_COMPRESSION_STARTED"
     CONTEXT_COMPRESSION_COMPLETED = "CONTEXT_COMPRESSION_COMPLETED"
 
-        # --- C5 Orchestration Fabric Event Types (C5 §49) ---
+    # --- C5 Orchestration Fabric Event Types (C5 §49) ---
     PLAN_CREATED = "PLAN_CREATED"
     PLAN_VALIDATED = "PLAN_VALIDATED"
     PLAN_STARTED = "PLAN_STARTED"
@@ -277,6 +275,83 @@ class EventType(str, Enum):
 
     VERIFICATION_FAILED = "VERIFICATION_FAILED"
 
+    # --- C7 World Runtime Event Types (C7 §40) ---
+    WORLD_CREATED = "WORLD_CREATED"
+    WORLD_PROVISION_STARTED = "WORLD_PROVISION_STARTED"
+    WORLD_PROVISION_COMPLETED = "WORLD_PROVISION_COMPLETED"
+    WORLD_STARTED = "WORLD_STARTED"
+    WORLD_PAUSED = "WORLD_PAUSED"
+    WORLD_RESUMED = "WORLD_RESUMED"
+    WORLD_RESET_STARTED = "WORLD_RESET_STARTED"
+    WORLD_RESET_COMPLETED = "WORLD_RESET_COMPLETED"
+    WORLD_SNAPSHOT_STARTED = "WORLD_SNAPSHOT_STARTED"
+    WORLD_SNAPSHOT_COMPLETED = "WORLD_SNAPSHOT_COMPLETED"
+    WORLD_HEALTH_DEGRADED = "WORLD_HEALTH_DEGRADED"
+    WORLD_FAILURE = "WORLD_FAILURE"
+    WORLD_RESOURCE_LIMIT_REACHED = "WORLD_RESOURCE_LIMIT_REACHED"
+    WORLD_DESTROY_STARTED = "WORLD_DESTROY_STARTED"
+    WORLD_COMPONENT_STARTED = "WORLD_COMPONENT_STARTED"
+    WORLD_STATE_CHANGED = "WORLD_STATE_CHANGED"
+
+    # --- C8 Arena & Evaluation Event Types (C8 §17) ---
+    ARENA_RUN_CREATED = "ARENA_RUN_CREATED"
+    ARENA_RUN_STARTED = "ARENA_RUN_STARTED"
+    ARENA_RUN_COMPLETED = "ARENA_RUN_COMPLETED"
+    ARENA_RUN_FAILED = "ARENA_RUN_FAILED"
+    ARENA_EVALUATION_STARTED = "ARENA_EVALUATION_STARTED"
+    ARENA_EVALUATION_COMPLETED = "ARENA_EVALUATION_COMPLETED"
+    ARENA_TRAJECTORY_FINALIZED = "ARENA_TRAJECTORY_FINALIZED"
+    ARENA_METRIC_COMPUTED = "ARENA_METRIC_COMPUTED"
+    ARENA_REGRESSION_DETECTED = "ARENA_REGRESSION_DETECTED"
+    ARENA_EXPERIMENT_STARTED = "ARENA_EXPERIMENT_STARTED"
+    ARENA_EXPERIMENT_COMPLETED = "ARENA_EXPERIMENT_COMPLETED"
+    ARENA_BENCHMARK_PUBLISHED = "ARENA_BENCHMARK_PUBLISHED"
+
+    # --- C10 Unified Execution & Comparison Event Types ---
+    C10_EXECUTION_PENDING = "C10_EXECUTION_PENDING"
+    C10_EXECUTION_ADMITTED = "C10_EXECUTION_ADMITTED"
+    C10_EXECUTION_ROUTING_STARTED = "C10_EXECUTION_ROUTING_STARTED"
+    C10_EXECUTION_ROUTING_COMPLETED = "C10_EXECUTION_ROUTING_COMPLETED"
+    C10_EXECUTION_STARTED = "C10_EXECUTION_STARTED"
+    C10_EXECUTION_STEP_STARTED = "C10_EXECUTION_STEP_STARTED"
+    C10_EXECUTION_STEP_COMPLETED = "C10_EXECUTION_STEP_COMPLETED"
+    C10_EXECUTION_STEP_FAILED = "C10_EXECUTION_STEP_FAILED"
+    C10_EXECUTION_SUCCEEDED = "C10_EXECUTION_SUCCEEDED"
+    C10_EXECUTION_FAILED = "C10_EXECUTION_FAILED"
+    C10_EXECUTION_CANCELLED = "C10_EXECUTION_CANCELLED"
+    C10_EXECUTION_RECOVERED = "C10_EXECUTION_RECOVERED"
+
+    C10_AMPLIFICATION_PLAN_CREATED = "C10_AMPLIFICATION_PLAN_CREATED"
+    C10_AMPLIFICATION_STAGE_STARTED = "C10_AMPLIFICATION_STAGE_STARTED"
+    C10_AMPLIFICATION_STAGE_COMPLETED = "C10_AMPLIFICATION_STAGE_COMPLETED"
+    C10_AMPLIFICATION_STAGE_FAILED = "C10_AMPLIFICATION_STAGE_FAILED"
+
+    C10_COMPARISON_EXPERIMENT_CREATED = "C10_COMPARISON_EXPERIMENT_CREATED"
+    C10_COMPARISON_EXPERIMENT_STARTED = "C10_COMPARISON_EXPERIMENT_STARTED"
+    C10_COMPARISON_EXPERIMENT_COMPLETED = "C10_COMPARISON_EXPERIMENT_COMPLETED"
+    C10_COMPARISON_RUN_STARTED = "C10_COMPARISON_RUN_STARTED"
+    C10_COMPARISON_RUN_COMPLETED = "C10_COMPARISON_RUN_COMPLETED"
+    C10_COMPARISON_PROTOCOL_VIOLATED = "C10_COMPARISON_PROTOCOL_VIOLATED"
+    C10_COMPARISON_RESULT_COMPUTED = "C10_COMPARISON_RESULT_COMPUTED"
+
+    C10_BUDGET_CHECKPOINT_EVALUATED = "C10_BUDGET_CHECKPOINT_EVALUATED"
+    C10_BUDGET_SOFT_BLOCKED = "C10_BUDGET_SOFT_BLOCKED"
+    C10_BUDGET_HARD_BLOCKED = "C10_BUDGET_HARD_BLOCKED"
+
+    C10_COST_LEDGER_ENTRY_RECORDED = "C10_COST_LEDGER_ENTRY_RECORDED"
+
+    C10_PROFILE_RESOLVED = "C10_PROFILE_RESOLVED"
+    C10_PROFILE_REUSED = "C10_PROFILE_REUSED"
+    C10_PRICING_SNAPSHOT_PINNED = "C10_PRICING_SNAPSHOT_PINNED"
+
+    C10_CLAIM_CLASSIFIED = "C10_CLAIM_CLASSIFIED"
+    C10_CLAIM_PROMOTED_TO_EXECUTED = "C10_CLAIM_PROMOTED_TO_EXECUTED"
+    C10_CLAIM_PROMOTED_TO_INITIATED = "C10_CLAIM_PROMOTED_TO_INITIATED"
+
+    C10_EVALUATION_STARTED = "C10_EVALUATION_STARTED"
+    C10_EVALUATION_COMPLETED = "C10_EVALUATION_COMPLETED"
+
+
 class ErrorCode(str, Enum):
     AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED"
     AUTHORIZATION_DENIED = "AUTHORIZATION_DENIED"
@@ -330,7 +405,6 @@ class ErrorCode(str, Enum):
     WORLD_PROVISION_FAILED = "WORLD_PROVISION_FAILED"
     WORLD_UNAVAILABLE = "WORLD_UNAVAILABLE"
 
-
     # --- C4 Context & Memory Fabric Error Codes (C4 §54) ---
     MEMORY_NOT_FOUND = "MEMORY_NOT_FOUND"
     MEMORY_ACCESS_DENIED = "MEMORY_ACCESS_DENIED"
@@ -345,7 +419,6 @@ class ErrorCode(str, Enum):
     CONTEXT_PERMISSION_FAILURE = "CONTEXT_PERMISSION_FAILURE"
     PROVENANCE_FAILURE = "PROVENANCE_FAILURE"
 
-
     # --- C6 Verification & Reliability Fabric Error Codes ---
     EVIDENCE_NOT_FOUND = "EVIDENCE_NOT_FOUND"
     EVIDENCE_INVALID_SOURCE = "EVIDENCE_INVALID_SOURCE"
@@ -353,6 +426,41 @@ class ErrorCode(str, Enum):
     CITATION_INVALID = "CITATION_INVALID"
     REVIEW_NOT_FOUND = "REVIEW_NOT_FOUND"
     INCIDENT_NOT_FOUND = "INCIDENT_NOT_FOUND"
+
+    # --- C10 Unified Execution & Comparison Error Codes ---
+    C10_CONFIGURATION_INVALID = "C10_CONFIGURATION_INVALID"
+    C10_CONFIGURATION_NOT_FOUND = "C10_CONFIGURATION_NOT_FOUND"
+    C10_TRACE_NOT_FOUND = "C10_TRACE_NOT_FOUND"
+    C10_TRACE_ALREADY_TERMINAL = "C10_TRACE_ALREADY_TERMINAL"
+    C10_IDEMPOTENCY_CONFLICT = "C10_IDEMPOTENCY_CONFLICT"
+    C10_BUDGET_HARD_BLOCK = "C10_BUDGET_HARD_BLOCK"
+    C10_PRICING_SNAPSHOT_UNAVAILABLE = "C10_PRICING_SNAPSHOT_UNAVAILABLE"
+    C10_MODEL_FINGERPRINT_UNRESOLVED = "C10_MODEL_FINGERPRINT_UNRESOLVED"
+    C10_PROFILE_NOT_FOUND = "C10_PROFILE_NOT_FOUND"
+    C10_PROTOCOL_INVALID = "C10_PROTOCOL_INVALID"
+    C10_COMPARISON_NOT_FOUND = "C10_COMPARISON_NOT_FOUND"
+    C10_COMPARISON_INCONCLUSIVE = "C10_COMPARISON_INCONCLUSIVE"
+    C10_COMPARISON_PROTOCOL_VIOLATED = "C10_COMPARISON_PROTOCOL_VIOLATED"
+    C10_AMPLIFICATION_STRATEGY_UNKNOWN = "C10_AMPLIFICATION_STRATEGY_UNKNOWN"
+    C10_AMPLIFICATION_STAGE_FAILED = "C10_AMPLIFICATION_STAGE_FAILED"
+    C10_EVIDENCE_INSUFFICIENT_FOR_EXECUTED = "C10_EVIDENCE_INSUFFICIENT_FOR_EXECUTED"
+    C10_EVALUATION_FAILED = "C10_EVALUATION_FAILED"
+    C10_RECOVERY_FAILED = "C10_RECOVERY_FAILED"
+    C10_WORKER_LOST = "C10_WORKER_LOST"
+    # Admission / lifecycle codes used by C10.2 controller
+    C10_MISSING_ORGANIZATION_ID = "C10_MISSING_ORGANIZATION_ID"
+    C10_UNSUPPORTED_MODEL_IDENTIFIER = "C10_UNSUPPORTED_MODEL_IDENTIFIER"
+    C10_UNSUPPORTED_PROTOCOL = "C10_UNSUPPORTED_PROTOCOL"
+    C10_BUDGET_EXCEEDED_PRE_ADMISSION = "C10_BUDGET_EXCEEDED_PRE_ADMISSION"
+    C10_BUDGET_EXCEEDED_CHECKPOINT = "C10_BUDGET_EXCEEDED_CHECKPOINT"
+    C10_EXECUTION_CANCELLED = "C10_EXECUTION_CANCELLED"
+    C10_EXECUTION_TIMEOUT = "C10_EXECUTION_TIMEOUT"
+    C10_EXECUTION_FAILED = "C10_EXECUTION_FAILED"
+    C10_EXECUTION_ORPHANED_ON_RESTART = "C10_EXECUTION_ORPHANED_ON_RESTART"
+    C10_PRICING_SNAPSHOT_NOT_FOUND = "C10_PRICING_SNAPSHOT_NOT_FOUND"
+    C10_MODEL_CONNECTION_INACTIVE = "C10_MODEL_CONNECTION_INACTIVE"
+    C10_MODEL_CREDENTIAL_DELETED = "C10_MODEL_CREDENTIAL_DELETED"
+    C10_COMPARISON_INVALID_CONFIG = "C10_COMPARISON_INVALID_CONFIG"
 
 
 # =============================================================================
@@ -611,12 +719,19 @@ class EnvironmentHealthStatus(str, Enum):
 
 
 class WorldStatus(str, Enum):
-    """World lifecycle (C3 §39)."""
+    """World lifecycle states (C3 §39 + C7 §6)."""
     REGISTERED = "REGISTERED"
-    PROVISIONING = "PROVISIONING"
+    VALIDATING = "VALIDATING"
     READY = "READY"
+    PROVISIONING = "PROVISIONING"
+    STARTING = "STARTING"
+    RUNNING = "RUNNING"
     ACTIVE = "ACTIVE"
+    PAUSING = "PAUSING"
+    PAUSED = "PAUSED"
+    RESUMING = "RESUMING"
     RESETTING = "RESETTING"
+    SNAPSHOTTING = "SNAPSHOTTING"
     DESTROYING = "DESTROYING"
     DESTROYED = "DESTROYED"
     FAILED = "FAILED"
@@ -647,7 +762,6 @@ class FilesystemAccessMode(str, Enum):
     WORKSPACE = "workspace"
     WORKSPACE_READONLY = "workspace_readonly"
     FULL = "full"
-
 
 
 # =============================================================================
@@ -713,7 +827,7 @@ class MemoryVerificationState(str, Enum):
     UNVERIFIED = "UNVERIFIED"
     VERIFIED = "VERIFIED"
     CONTRADICTED = "CONTRADICTED"
-    DISPUTED = "DISPUTED"  
+    DISPUTED = "DISPUTED"
 
 
 # =============================================================================
@@ -825,8 +939,6 @@ class StatePatchOperation(str, Enum):
     REMOVE = "remove"
 
 
-
-
 # =============================================================================
 # C6 — Verification & Reliability Fabric Enums
 # =============================================================================
@@ -928,3 +1040,406 @@ class UncertaintyLevel(str, Enum):
     UNCERTAIN = "UNCERTAIN"
     CONTRADICTED = "CONTRADICTED"
     UNKNOWN = "UNKNOWN"
+
+
+# =============================================================================
+# C7 — World Runtime Enums
+# =============================================================================
+
+
+class WorldComponentType(str, Enum):
+    """Types of pluggable world components (C7 §10)."""
+    FILESYSTEM = "filesystem"
+    BROWSER = "browser"
+    TERMINAL = "terminal"
+    RUNTIME = "runtime"
+    DATABASE = "database"
+    API = "api"
+    APPLICATION = "application"
+    NETWORK = "network"
+    CREDENTIAL = "credential"
+    CLOCK = "clock"
+    STATE = "state"
+
+
+class WorldClockMode(str, Enum):
+    """World time modes (C7 §21)."""
+    REAL_TIME = "real_time"
+    FIXED_TIME = "fixed_time"
+    SIMULATED_TIME = "simulated_time"
+    ACCELERATED_TIME = "accelerated_time"
+
+
+class WorldChangeType(str, Enum):
+    """Types of world state changes (C7 §46)."""
+    FILE_CREATED = "FILE_CREATED"
+    FILE_MODIFIED = "FILE_MODIFIED"
+    FILE_DELETED = "FILE_DELETED"
+    DATABASE_ROW_CREATED = "DATABASE_ROW_CREATED"
+    DATABASE_ROW_UPDATED = "DATABASE_ROW_UPDATED"
+    DATABASE_ROW_DELETED = "DATABASE_ROW_DELETED"
+    PROCESS_STARTED = "PROCESS_STARTED"
+    PROCESS_STOPPED = "PROCESS_STOPPED"
+    BROWSER_NAVIGATED = "BROWSER_NAVIGATED"
+    NETWORK_REQUEST = "NETWORK_REQUEST"
+    STATE_MUTATED = "STATE_MUTATED"
+    CREDENTIAL_INJECTED = "CREDENTIAL_INJECTED"
+
+
+class WorldActionReversibility(str, Enum):
+    """Reversibility classification for world actions (C7 §47)."""
+    REVERSIBLE = "REVERSIBLE"
+    PARTIALLY_REVERSIBLE = "PARTIALLY_REVERSIBLE"
+    IRREVERSIBLE = "IRREVERSIBLE"
+
+
+class WorldSnapshotType(str, Enum):
+    """Types of world snapshots (C7 §18)."""
+    BASE = "base"
+    CHECKPOINT = "checkpoint"
+    EVALUATION = "evaluation"
+
+
+# =============================================================================
+# C8 — Arena & Evaluation Fabric Enums
+# =============================================================================
+
+
+class BenchmarkType(str, Enum):
+    """Types of benchmarks (C8 §7)."""
+    CAPABILITY = "capability"
+    WORKFLOW = "workflow"
+    LONG_HORIZON = "long_horizon"
+    RELIABILITY = "reliability"
+    SAFETY = "safety"
+    REGRESSION = "regression"
+
+
+class TaskVisibility(str, Enum):
+    """Task visibility levels (C8 §10)."""
+    PUBLIC = "public"
+    PRIVATE = "private"
+    ENTERPRISE = "enterprise"
+    HIDDEN = "hidden"
+    DYNAMIC = "dynamic"
+
+
+class ArenaRunStatus(str, Enum):
+    """Lifecycle of an Arena run (C8 §14)."""
+    CREATED = "CREATED"
+    QUEUED = "QUEUED"
+    PROVISIONING_WORLD = "PROVISIONING_WORLD"
+    INITIALIZING = "INITIALIZING"
+    RUNNING = "RUNNING"
+    VERIFYING = "VERIFYING"
+    EVALUATING = "EVALUATING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    EVALUATION_FAILED = "EVALUATION_FAILED"
+    CANCELLED = "CANCELLED"
+
+
+class EvaluatorType(str, Enum):
+    """Types of evaluators (C8 §24-28)."""
+    DETERMINISTIC = "deterministic"
+    MODEL_BASED = "model_based"
+    RULE_BASED = "rule_based"
+    HUMAN = "human"
+    HYBRID = "hybrid"
+
+
+class MetricType(str, Enum):
+    """Types of metrics (C8 §24)."""
+    TASK_SUCCESS = "task_success"
+    CORRECTNESS = "correctness"
+    COMPLETENESS = "completeness"
+    EVIDENCE_QUALITY = "evidence_quality"
+    RELIABILITY = "reliability"
+    RECOVERY = "recovery"
+    TOOL_EFFICIENCY = "tool_efficiency"
+    LATENCY = "latency"
+    COST = "cost"
+    SAFETY = "safety"
+    CONSTRAINT_ADHERENCE = "constraint_adherence"
+    HUMAN_INTERVENTION = "human_intervention"
+
+
+class FailureCategory(str, Enum):
+    """Arena failure taxonomy (C8 §45)."""
+    TASK_FAILURE = "TASK_FAILURE"
+    MODEL_FAILURE = "MODEL_FAILURE"
+    AGENT_FAILURE = "AGENT_FAILURE"
+    PLANNING_FAILURE = "PLANNING_FAILURE"
+    TOOL_FAILURE = "TOOL_FAILURE"
+    WORLD_FAILURE = "WORLD_FAILURE"
+    CONTEXT_FAILURE = "CONTEXT_FAILURE"
+    MEMORY_FAILURE = "MEMORY_FAILURE"
+    VERIFICATION_FAILURE = "VERIFICATION_FAILURE"
+    SECURITY_FAILURE = "SECURITY_FAILURE"
+    RESOURCE_FAILURE = "RESOURCE_FAILURE"
+    TIMEOUT = "TIMEOUT"
+    EXTERNAL_FAILURE = "EXTERNAL_FAILURE"
+    HUMAN_ABORT = "HUMAN_ABORT"
+
+
+class RegressionStatus(str, Enum):
+    """Regression comparison result (C8 §38-39)."""
+    IMPROVED = "IMPROVED"
+    REGRESSED = "REGRESSED"
+    UNCHANGED = "UNCHANGED"
+    INCONCLUSIVE = "INCONCLUSIVE"
+    NEW_BASELINE = "NEW_BASELINE"
+
+
+# =============================================================================
+# C10 — Unified Execution & Comparison Engine Enums
+# =============================================================================
+
+
+class C10ExecutionProtocol(str, Enum):
+    """The three execution protocols C10 unifies (C10 §2)."""
+    DIRECT = "DIRECT"
+    AMPLIFIED = "AMPLIFIED"
+    PAIRED = "PAIRED"
+
+
+class C10ExecutionMode(str, Enum):
+    """Top-level mode (C10 §1)."""
+    WORK = "WORK"
+    COMPARISON = "COMPARISON"
+
+
+class C10ExecutionStatusEnum(str, Enum):
+    """C10 execution lifecycle (richer than C1's ExecutionStatus)."""
+    PENDING = "PENDING"
+    ADMITTED = "ADMITTED"
+    ROUTING = "ROUTING"
+    BUDGET_CHECKING = "BUDGET_CHECKING"
+    RUNNING = "RUNNING"
+    STEP_EXECUTING = "STEP_EXECUTING"
+    EVALUATING = "EVALUATING"
+    FINALIZING = "FINALIZING"
+    SUCCEEDED = "SUCCEEDED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+    BUDGET_EXCEEDED = "BUDGET_EXCEEDED"
+    RECOVERED = "RECOVERED"
+
+
+class C10StepKind(str, Enum):
+    MODEL_CALL = "MODEL_CALL"
+    TOOL_CALL = "TOOL_CALL"
+    CONTEXT_BUILD = "CONTEXT_BUILD"
+    VERIFICATION = "VERIFICATION"
+    AMPLIFICATION_STAGE = "AMPLIFICATION_STAGE"
+    EVALUATION = "EVALUATION"
+    RECOVERY = "RECOVERY"
+    CHECKPOINT = "CHECKPOINT"
+
+
+class C10StepStatus(str, Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    SUCCEEDED = "SUCCEEDED"
+    FAILED = "FAILED"
+    SKIPPED = "SKIPPED"
+    CANCELLED = "CANCELLED"
+
+
+class ComparisonMode(str, Enum):
+    A_VS_B = "A_VS_B"
+    N_WAY = "N_WAY"
+    HOLDOUT = "HOLDOUT"
+    ABLATION = "ABLATION"
+
+
+class ComparisonStatus(str, Enum):
+    PENDING = "PENDING"
+    PROVISIONING = "PROVISIONING"
+    RUNNING = "RUNNING"
+    EVALUATING = "EVALUATING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+    INVALID_PROTOCOL = "INVALID_PROTOCOL"
+
+
+class ComparisonOutcome(str, Enum):
+    """Final verdict of a comparison (INV-36)."""
+    A_WINS = "A_WINS"
+    B_WINS = "B_WINS"
+    TIE = "TIE"
+    INCONCLUSIVE = "INCONCLUSIVE"
+    INVALID_PROTOCOL = "INVALID_PROTOCOL"
+    MULTI_WINNER = "MULTI_WINNER"
+
+
+class ComparisonDimension(str, Enum):
+    QUALITY = "quality"
+    COST = "cost"
+    LATENCY = "latency"
+    RELIABILITY = "reliability"
+    EVIDENCE_QUALITY = "evidence_quality"
+    SAFETY = "safety"
+
+
+class BudgetCheckpoint(str, Enum):
+    """Six budget enforcement checkpoints (INV-38)."""
+    PRE_ADMISSION = "PRE_ADMISSION"
+    POST_ROUTING = "POST_ROUTING"
+    PRE_MODEL_CALL = "PRE_MODEL_CALL"
+    POST_MODEL_CALL = "POST_MODEL_CALL"
+    PRE_TOOL_CALL = "PRE_TOOL_CALL"
+    POST_TOOL_CALL = "POST_TOOL_CALL"
+
+
+class BudgetDecision(str, Enum):
+    ALLOW = "ALLOW"
+    SOFT_BLOCK = "SOFT_BLOCK"
+    HARD_BLOCK = "HARD_BLOCK"
+
+
+class BudgetDimension(str, Enum):
+    COST_USD = "cost_usd"
+    DURATION_SECONDS = "duration_seconds"
+    MODEL_CALLS = "model_calls"
+    TOOL_CALLS = "tool_calls"
+    TOKENS = "tokens"
+
+
+class CostCategory(str, Enum):
+    """Cost category decomposition (INV-45)."""
+    MODEL = "MODEL"
+    PLANNING = "PLANNING"
+    TOOL = "TOOL"
+    ENVIRONMENT = "ENVIRONMENT"
+    VERIFICATION = "VERIFICATION"
+    RECOVERY = "RECOVERY"
+    OVERHEAD = "OVERHEAD"
+
+
+class PricingSource(str, Enum):
+    PROVIDER_API = "PROVIDER_API"
+    PROVIDER_PUBLISHED = "PROVIDER_PUBLISHED"
+    MANUAL_ENTRY = "MANUAL_ENTRY"
+    CONTRACT_NEGOTIATED = "CONTRACT_NEGOTIATED"
+    DEFAULT_FALLBACK = "DEFAULT_FALLBACK"
+
+
+class PricingUnit(str, Enum):
+    PER_1K_TOKENS = "per_1k_tokens"
+    PER_1M_TOKENS = "per_1m_tokens"
+    PER_REQUEST = "per_request"
+    PER_SECOND = "per_second"
+    PER_MINUTE = "per_minute"
+
+
+class Currency(str, Enum):
+    USD = "USD"
+    EUR = "EUR"
+    GBP = "GBP"
+    JPY = "JPY"
+    INR = "INR"
+
+
+class ProfileTier(str, Enum):
+    """Tiered profiling (INV-41)."""
+    MINIMAL = "MINIMAL"
+    BASIC = "BASIC"
+    STANDARD = "STANDARD"
+    COMPREHENSIVE = "COMPREHENSIVE"
+
+
+class ProfileFreshness(str, Enum):
+    FRESH = "FRESH"
+    AGING = "AGING"
+    STALE = "STALE"
+    REUSED = "REUSED"
+
+
+class ConnectionStatus(str, Enum):
+    HEALTHY = "HEALTHY"
+    DEGRADED = "DEGRADED"
+    UNHEALTHY = "UNHEALTHY"
+    UNKNOWN = "UNKNOWN"
+
+
+class ClaimClassification(str, Enum):
+    """Core-owned claim classification (D10)."""
+    GENERATED = "GENERATED"
+    INITIATED = "INITIATED"
+    EXECUTED = "EXECUTED"
+    UNVERIFIED = "UNVERIFIED"
+
+
+class ClaimActionType(str, Enum):
+    DATA_RETRIEVAL = "DATA_RETRIEVAL"
+    COMPUTATION = "COMPUTATION"
+    FILE_WRITE = "FILE_WRITE"
+    FILE_READ = "FILE_READ"
+    EXTERNAL_API_CALL = "EXTERNAL_API_CALL"
+    DATABASE_WRITE = "DATABASE_WRITE"
+    DATABASE_READ = "DATABASE_READ"
+    EMAIL_SEND = "EMAIL_SEND"
+    MESSAGE_SEND = "MESSAGE_SEND"
+    TRANSACTION = "TRANSACTION"
+    OTHER = "OTHER"
+
+
+class EvidenceQualificationLevel(str, Enum):
+    NONE = "NONE"
+    INVOCATION_RECORDED = "INVOCATION_RECORDED"
+    INVOCATION_SUCCEEDED = "INVOCATION_SUCCEEDED"
+    OBSERVATION_CAPTURED = "OBSERVATION_CAPTURED"
+    ARTIFACT_PRODUCED = "ARTIFACT_PRODUCED"
+    EXTERNAL_CONFIRMATION = "EXTERNAL_CONFIRMATION"
+
+
+class AmplificationStrategy(str, Enum):
+    """The 5 core strategies shipped in C10.4 (D9)."""
+    PLANNING = "PLANNING"
+    CONTEXT_RETRIEVAL = "CONTEXT_RETRIEVAL"
+    TOOL_GROUNDED = "TOOL_GROUNDED"
+    VERIFICATION = "VERIFICATION"
+    REPAIR = "REPAIR"
+
+
+class AmplificationStageStatus(str, Enum):
+    PENDING = "PENDING"
+    RUNNING = "RUNNING"
+    SUCCEEDED = "SUCCEEDED"
+    FAILED = "FAILED"
+    SKIPPED = "SKIPPED"
+
+
+class EvaluationBackend(str, Enum):
+    C6_VERIFICATION = "C6_VERIFICATION"
+    C8_ARENA = "C8_ARENA"
+    HYBRID = "HYBRID"
+    HEURISTIC = "HEURISTIC"
+
+
+class EvaluationDimensionEnum(str, Enum):
+    CORRECTNESS = "correctness"
+    COMPLETENESS = "completeness"
+    EVIDENCE_QUALITY = "evidence_quality"
+    INTEGRITY = "integrity"
+    RELIABILITY = "reliability"
+    SAFETY = "safety"
+    LATENCY = "latency"
+    COST = "cost"
+    CONSTRAINT_ADHERENCE = "constraint_adherence"
+
+
+# =============================================================================
+# C10 compatibility aliases
+# Used by execution_c10.py schemas and C10.2 controller/repositories.
+# Canonical names above (C10ExecutionProtocol, …) remain the source of truth.
+# =============================================================================
+
+ExecutionProtocol = C10ExecutionProtocol
+ExecutionMode = C10ExecutionMode
+C10ExecutionStatus = C10ExecutionStatusEnum
+StepKind = C10StepKind
+StepStatus = C10StepStatus
+StageStatus = AmplificationStageStatus
